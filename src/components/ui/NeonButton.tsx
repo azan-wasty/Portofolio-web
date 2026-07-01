@@ -4,20 +4,20 @@ import type { ReactNode } from "react";
 interface NeonButtonProps {
   href: string;
   children: ReactNode;
-  variant?: "cyan" | "magenta";
+  variant?: "yellow" | "red";
   external?: boolean;
 }
 
 export function NeonButton({
   href,
   children,
-  variant = "cyan",
+  variant = "yellow",
   external = false,
 }: NeonButtonProps) {
   const colorClass =
-    variant === "cyan"
-      ? "border-signal-cyan text-signal-cyan hover:bg-signal-cyan hover:text-void hover:shadow-[0_0_20px_var(--color-signal-cyan)]"
-      : "border-signal-magenta text-signal-magenta hover:bg-signal-magenta hover:text-void hover:shadow-[0_0_20px_var(--color-signal-magenta)]";
+    variant === "yellow"
+      ? "border-signal-yellow text-signal-yellow hover:bg-signal-yellow hover:text-void hover:shadow-[0_0_20px_var(--color-signal-yellow)]"
+      : "border-signal-red text-signal-red hover:bg-signal-red hover:text-void hover:shadow-[0_0_20px_var(--color-signal-red)]";
 
   return (
     <Link

@@ -9,7 +9,7 @@ export function Hero() {
       className="scanlines relative flex min-h-[90vh] flex-col justify-center border-b border-void-line px-6"
     >
       <div className="mx-auto w-full max-w-6xl">
-        <p className="mb-4 font-mono text-sm text-signal-magenta">
+        <p className="mb-4 font-mono text-sm text-signal-yellow">
           {"// system boot — identity confirmed"}
         </p>
 
@@ -19,7 +19,7 @@ export function Hero() {
           className="font-display text-4xl uppercase leading-tight tracking-wide text-text-primary sm:text-6xl md:text-7xl"
         />
 
-        <p className="mt-4 font-mono text-lg text-signal-cyan sm:text-xl">
+        <p className="mt-4 font-mono text-lg text-signal-red sm:text-xl">
           {profile.role}
         </p>
 
@@ -28,10 +28,10 @@ export function Hero() {
         </p>
 
         <div className="mt-10 flex flex-wrap gap-4">
-          <NeonButton href="#projects" variant="magenta">
+          <NeonButton href="#projects" variant="yellow">
             View Projects
           </NeonButton>
-          <NeonButton href="#contact" variant="cyan">
+          <NeonButton href="#contact" variant="red">
             Get In Touch
           </NeonButton>
         </div>

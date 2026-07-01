@@ -24,15 +24,15 @@ export function Contact() {
                   ? "noopener noreferrer"
                   : undefined
               }
-              className="flex items-center gap-3 text-text-dim transition-colors hover:text-signal-cyan"
+              className="flex items-center gap-3 text-text-dim transition-colors hover:text-signal-red"
             >
-              <span className="text-signal-magenta">{channel.label}</span>
+              <span className="text-signal-yellow">{channel.label}</span>
               {channel.value}
             </a>
           ))}
         </div>
 
-        <NeonButton href="mailto:wastyazan@gmail.com" variant="magenta">
+        <NeonButton href="mailto:wastyazan@gmail.com" variant="yellow">
           Send a Message
         </NeonButton>
       </div>

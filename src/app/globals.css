@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  /* Primary — Cyberpunk Yellow dominance */
-  --color-void: #fcee0a;
-  --color-void-raised: #0a0a0a;
-  --color-void-line: rgba(0, 0, 0, 0.15);
-  --color-signal-yellow: #fcee0a;
+  /* Primary — void-black base, hazard yellow/red/cyan accents */
+  --color-void: #e5ff00;
+  --color-void-raised: #e5ff00;
+  --color-void-line: rgba(255, 255, 255, 0.12);
+  --color-signal-yellow: #000000;
   --color-signal-red: #ff2e2e;
   --color-signal-cyan: #00f0ff;
-  --color-text-primary: #08080a;
-  --color-text-dim: #2a2a28;
+  --color-text-primary: #f2f2ef;
+  --color-text-dim: #9a9a95;
 
-  --font-display: var(--font-oxanium);
+  --font-display: var(--font-orbitron);
   --font-mono: var(--font-space-mono);
+  --font-signature: var(--font-cyberpunk);
 }
 
 @theme inline {
@@ -26,6 +27,7 @@
   --color-text-dim: var(--color-text-dim);
   --font-display: var(--font-display);
   --font-mono: var(--font-mono);
+  --font-signature: var(--font-signature);
 }
 
 * {
@@ -43,15 +45,13 @@ body {
   color: var(--color-signal-yellow);
 }
 
-/* Scanline overlay — darkened for yellow bg */
+/* Scanline overlay */
 .scanlines {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.04),
-    rgba(0, 0, 0, 0.04) 1px,
-    transparent 1px,
-    transparent 3px
-  );
+  background-image: repeating-linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.04),
+      rgba(0, 0, 0, 0.04) 1px,
+      transparent 1px,
+      transparent 3px);
 }
 
 /* ─── CYBERPUNK HEADING STYLE (skewed angular, like the franchise logo) ─── */
@@ -76,7 +76,7 @@ body {
   transform: skewX(12deg);
 }
 
-/* Glitch text signature effect — updated for yellow bg */
+/* Glitch text signature effect */
 .glitch {
   position: relative;
   display: inline-block;
@@ -104,29 +104,65 @@ body {
 }
 
 @keyframes glitch-slice-1 {
-  0% { clip-path: inset(10% 0 85% 0); }
-  20% { clip-path: inset(70% 0 5% 0); }
-  40% { clip-path: inset(40% 0 43% 0); }
-  60% { clip-path: inset(90% 0 2% 0); }
-  80% { clip-path: inset(15% 0 65% 0); }
-  100% { clip-path: inset(55% 0 20% 0); }
+  0% {
+    clip-path: inset(10% 0 85% 0);
+  }
+
+  20% {
+    clip-path: inset(70% 0 5% 0);
+  }
+
+  40% {
+    clip-path: inset(40% 0 43% 0);
+  }
+
+  60% {
+    clip-path: inset(90% 0 2% 0);
+  }
+
+  80% {
+    clip-path: inset(15% 0 65% 0);
+  }
+
+  100% {
+    clip-path: inset(55% 0 20% 0);
+  }
 }
 
 @keyframes glitch-slice-2 {
-  0% { clip-path: inset(60% 0 15% 0); }
-  20% { clip-path: inset(5% 0 80% 0); }
-  40% { clip-path: inset(85% 0 5% 0); }
-  60% { clip-path: inset(20% 0 60% 0); }
-  80% { clip-path: inset(45% 0 35% 0); }
-  100% { clip-path: inset(10% 0 75% 0); }
+  0% {
+    clip-path: inset(60% 0 15% 0);
+  }
+
+  20% {
+    clip-path: inset(5% 0 80% 0);
+  }
+
+  40% {
+    clip-path: inset(85% 0 5% 0);
+  }
+
+  60% {
+    clip-path: inset(20% 0 60% 0);
+  }
+
+  80% {
+    clip-path: inset(45% 0 35% 0);
+  }
+
+  100% {
+    clip-path: inset(10% 0 75% 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .glitch::before,
   .glitch::after {
     animation: none;
     content: none;
   }
+
   * {
     scroll-behavior: auto;
   }

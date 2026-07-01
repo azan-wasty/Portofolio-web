@@ -9,14 +9,14 @@ export function Hero() {
       className="scanlines relative flex min-h-[90vh] flex-col justify-center px-6"
     >
       <div className="mx-auto w-full max-w-6xl">
-        <p className="mb-4 font-mono text-sm text-void-raised">
+        <p className="mb-4 font-mono text-sm text-signal-cyan/70">
           {"// system boot — identity confirmed"}
         </p>
 
         <GlitchText
           text={profile.name}
           as="h1"
-          className="cyber-heading font-display text-4xl uppercase leading-tight tracking-wide text-text-primary sm:text-6xl md:text-7xl"
+          className="cyber-heading font-signature text-5xl uppercase leading-tight tracking-wide text-text-primary sm:text-7xl md:text-8xl"
         />
 
         <p className="mt-6 font-mono text-lg text-signal-red sm:text-xl">

@@ -3,27 +3,27 @@ import { profile } from "@/lib/data/profile";
 
 export function About() {
   return (
-    <section id="about" className="bg-void-raised px-6 py-24">
+    <section id="about" className="border-b border-void-line px-6 py-24">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading index="01" title="About" subtitle="who's running this process" inverted />
+        <SectionHeading index="01" title="About" subtitle="who's running this process" />
         <div className="grid gap-10 sm:grid-cols-3">
           <div className="sm:col-span-2">
-            <p className="text-base leading-relaxed text-neutral-400">
+            <p className="text-base leading-relaxed text-text-dim">
               {profile.longBio}
             </p>
           </div>
-          <dl className="space-y-4 border-l border-neutral-700 pl-6 font-mono text-sm">
+          <dl className="space-y-4 border-l border-void-line pl-6 font-mono text-sm">
             <div>
-              <dt className="text-signal-cyan">Location</dt>
-              <dd className="text-neutral-400">{profile.location}</dd>
+              <dt className="text-signal-yellow">Location</dt>
+              <dd className="text-text-dim">{profile.location}</dd>
             </div>
             <div>
-              <dt className="text-signal-cyan">Focus</dt>
-              <dd className="text-neutral-400">Full-stack + recommendation systems</dd>
+              <dt className="text-signal-yellow">Focus</dt>
+              <dd className="text-text-dim">Full-stack + recommendation systems</dd>
             </div>
             <div>
-              <dt className="text-signal-cyan">Status</dt>
-              <dd className="text-signal-red">Currently interning — Educura (LMS)</dd>
+              <dt className="text-signal-yellow">Status</dt>
+              <dd className="text-signal-red">Currently interning — Oriental Nippon Develpoment </dd>
             </div>
           </dl>
         </div>

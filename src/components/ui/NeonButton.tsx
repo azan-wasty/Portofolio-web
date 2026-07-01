@@ -16,7 +16,7 @@ export function NeonButton({
 }: NeonButtonProps) {
   const colorMap = {
     yellow:
-      "border-text-primary text-text-primary hover:bg-text-primary hover:text-signal-yellow hover:shadow-[0_0_20px_rgba(8,8,10,0.5)]",
+      "border-signal-yellow text-signal-yellow hover:bg-signal-yellow hover:text-void hover:shadow-[0_0_20px_var(--color-signal-yellow)]",
     red:
       "border-signal-red text-signal-red hover:bg-signal-red hover:text-void-raised hover:shadow-[0_0_20px_var(--color-signal-red)]",
     cyan:

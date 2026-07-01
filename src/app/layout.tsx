@@ -1,21 +1,31 @@
 import type { Metadata } from "next";
-import { Oxanium, Space_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Orbitron, Space_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollTrail } from "@/components/ui/ScrollTrail";
 import { SandevistanTrail } from "@/components/ui/SandevistanTrail";
 import "./globals.css";
 
-const oxanium = Oxanium({
-  variable: "--font-oxanium",
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
   subsets: ["latin"],
-  weight: ["500", "700", "800"],
+  weight: ["500", "700", "800", "900"],
 });
 
 const spaceMono = Space_Mono({
   variable: "--font-space-mono",
   subsets: ["latin"],
   weight: ["400", "700"],
+});
+
+// Signature wordmark face — used sparingly, hero name only. Not for body
+// or UI text: it only ships uppercase/lowercase Latin glyphs (no numerals
+// or punctuation).
+const cyberpunkSignature = localFont({
+  src: "../assets/fonts/Cyberpunk.ttf",
+  variable: "--font-cyberpunk",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +42,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${oxanium.variable} ${spaceMono.variable} h-full`}
+      className={`${orbitron.variable} ${spaceMono.variable} ${cyberpunkSignature.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-void text-text-primary antialiased">
         <ScrollTrail />

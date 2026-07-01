@@ -12,7 +12,9 @@ with Space Mono for utility text.
 - **Framework:** Next.js 16 (App Router)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS v4 (CSS-based `@theme` tokens, no config file needed)
-- **Fonts:** Orbitron (display) + Space Mono (mono/body), via `next/font/google`
+- **Fonts:** Orbitron (display) + Space Mono (mono/body) via `next/font/google`,
+  plus a self-hosted signature display face for the hero name only, via
+  `next/font/local`
 
 ## Project structure
 
@@ -89,8 +91,11 @@ Railway handles the rest via its Nixpacks builder.
 ## Notes for reviewers
 
 - Cyberpunk-genre visual language (hazard yellow/red, glitch, scanlines) is
-  original — no third-party character art, logos, video, or trademarked
-  assets are used anywhere in this project.
+  original — no third-party character art, logos, video, or game assets are
+  used anywhere in this project. One exception: the hero name is set in a
+  free fan-made display typeface stylistically inspired by the franchise's
+  lettering (`src/assets/fonts/Cyberpunk-Regular.ttf`), used nowhere else.
+  Everywhere else (headings, UI, body) uses openly licensed Google Fonts.
 - `ScrollTrail` (`src/components/ui/ScrollTrail.tsx`) is a canvas component
   that draws motion streaks scaled to scroll velocity — an original take on
   a speed-trail interaction, respects `prefers-reduced-motion`.

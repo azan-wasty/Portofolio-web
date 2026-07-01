@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+:root {
+  --color-void: #0a0a0f;
+  --color-void-raised: #121218;
+  --color-void-line: #24242e;
+  --color-signal-cyan: #00fff5;
+  --color-signal-magenta: #ff2e63;
+  --color-signal-yellow: #f5d90a;
+  --color-text-primary: #eaeaf0;
+  --color-text-dim: #8b8b9a;
+
+  --font-display: var(--font-orbitron);
+  --font-mono: var(--font-space-mono);
+}
+
+@theme inline {
+  --color-void: var(--color-void);
+  --color-void-raised: var(--color-void-raised);
+  --color-void-line: var(--color-void-line);
+  --color-signal-cyan: var(--color-signal-cyan);
+  --color-signal-magenta: var(--color-signal-magenta);
+  --color-signal-yellow: var(--color-signal-yellow);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-dim: var(--color-text-dim);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+}
+
+::selection {
+  background: var(--color-signal-magenta);
+  color: var(--color-void);
+}
+
+/* Scanline overlay used behind hero content */
+.scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* Glitch text signature effect */
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  background: var(--color-void);
+  overflow: hidden;
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -1px 0 var(--color-signal-magenta);
+  animation: glitch-slice-1 4.5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: 1px 0 var(--color-signal-cyan);
+  animation: glitch-slice-2 3.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-slice-1 {
+  0% { clip-path: inset(10% 0 85% 0); }
+  20% { clip-path: inset(70% 0 5% 0); }
+  40% { clip-path: inset(40% 0 43% 0); }
+  60% { clip-path: inset(90% 0 2% 0); }
+  80% { clip-path: inset(15% 0 65% 0); }
+  100% { clip-path: inset(55% 0 20% 0); }
+}
+
+@keyframes glitch-slice-2 {
+  0% { clip-path: inset(60% 0 15% 0); }
+  20% { clip-path: inset(5% 0 80% 0); }
+  40% { clip-path: inset(85% 0 5% 0); }
+  60% { clip-path: inset(20% 0 60% 0); }
+  80% { clip-path: inset(45% 0 35% 0); }
+  100% { clip-path: inset(10% 0 75% 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch::before,
+  .glitch::after {
+    animation: none;
+    content: none;
+  }
+  * {
+    scroll-behavior: auto;
+  }
+}

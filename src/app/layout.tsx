@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Orbitron, Space_Mono } from "next/font/google";
+import { Oxanium, Space_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollTrail } from "@/components/ui/ScrollTrail";
 import { SandevistanTrail } from "@/components/ui/SandevistanTrail";
 import "./globals.css";
 
-const orbitron = Orbitron({
-  variable: "--font-orbitron",
+const oxanium = Oxanium({
+  variable: "--font-oxanium",
   subsets: ["latin"],
-  weight: ["500", "700", "900"],
+  weight: ["500", "700", "800"],
 });
 
 const spaceMono = Space_Mono({
@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${orbitron.variable} ${spaceMono.variable} h-full`}
+      className={`${oxanium.variable} ${spaceMono.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-void text-text-primary antialiased">
         <ScrollTrail />

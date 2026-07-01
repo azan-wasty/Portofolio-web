@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --color-void: #08080a;
-  --color-void-raised: #131311;
-  --color-void-line: #2c2b23;
+  /* Primary — Cyberpunk Yellow dominance */
+  --color-void: #fcee0a;
+  --color-void-raised: #0a0a0a;
+  --color-void-line: rgba(0, 0, 0, 0.15);
   --color-signal-yellow: #fcee0a;
   --color-signal-red: #ff2e2e;
-  --color-text-primary: #f2f2ea;
-  --color-text-dim: #8f8f85;
+  --color-signal-cyan: #00f0ff;
+  --color-text-primary: #08080a;
+  --color-text-dim: #2a2a28;
 
-  --font-display: var(--font-orbitron);
+  --font-display: var(--font-oxanium);
   --font-mono: var(--font-space-mono);
 }
 
@@ -19,6 +21,7 @@
   --color-void-line: var(--color-void-line);
   --color-signal-red: var(--color-signal-red);
   --color-signal-yellow: var(--color-signal-yellow);
+  --color-signal-cyan: var(--color-signal-cyan);
   --color-text-primary: var(--color-text-primary);
   --color-text-dim: var(--color-text-dim);
   --font-display: var(--font-display);
@@ -36,22 +39,44 @@ body {
 }
 
 ::selection {
-  background: var(--color-signal-yellow);
-  color: var(--color-void);
+  background: var(--color-void-raised);
+  color: var(--color-signal-yellow);
 }
 
-/* Scanline overlay used behind hero content */
+/* Scanline overlay — darkened for yellow bg */
 .scanlines {
   background-image: repeating-linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.03),
-    rgba(255, 255, 255, 0.03) 1px,
+    rgba(0, 0, 0, 0.04),
+    rgba(0, 0, 0, 0.04) 1px,
     transparent 1px,
     transparent 3px
   );
 }
 
-/* Glitch text signature effect */
+/* ─── CYBERPUNK HEADING STYLE (skewed angular, like the franchise logo) ─── */
+.cyber-heading {
+  display: inline-block;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transform: skewX(-12deg);
+  position: relative;
+  padding: 0.1em 0.25em;
+}
+
+.cyber-heading::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--color-signal-red);
+  transform: skewX(12deg);
+}
+
+/* Glitch text signature effect — updated for yellow bg */
 .glitch {
   position: relative;
   display: inline-block;
@@ -68,7 +93,7 @@ body {
 
 .glitch::before {
   left: 2px;
-  text-shadow: -1px 0 var(--color-signal-yellow);
+  text-shadow: -1px 0 var(--color-signal-cyan);
   animation: glitch-slice-1 4.5s infinite linear alternate-reverse;
 }
 

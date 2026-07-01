@@ -26,13 +26,13 @@ export function Contact() {
               }
               className="flex items-center gap-3 text-text-dim transition-colors hover:text-signal-red"
             >
-              <span className="text-signal-yellow">{channel.label}</span>
+              <span className="text-signal-cyan font-bold">{channel.label}</span>
               {channel.value}
             </a>
           ))}
         </div>
 
-        <NeonButton href="mailto:wastyazan@gmail.com" variant="yellow">
+        <NeonButton href="mailto:wastyazan@gmail.com" variant="red">
           Send a Message
         </NeonButton>
       </div>

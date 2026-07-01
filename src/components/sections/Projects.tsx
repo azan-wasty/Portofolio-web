@@ -3,9 +3,9 @@ import { RotatableWheel } from "./RotatableWheel";
 
 export function Projects() {
   return (
-    <section id="projects" className="border-b border-void-line px-6 py-24">
+    <section id="projects" className="bg-void-raised px-6 py-24">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading index="03" title="Projects" subtitle="interactive core" />
+        <SectionHeading index="03" title="Projects" subtitle="interactive core" inverted />
         <div className="mt-8">
           <RotatableWheel />
         </div>

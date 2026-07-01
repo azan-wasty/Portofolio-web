@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Orbitron, Space_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollTrail } from "@/components/ui/ScrollTrail";
 import "./globals.css";
 
 const orbitron = Orbitron({
@@ -33,6 +34,7 @@ export default function RootLayout({
       className={`${orbitron.variable} ${spaceMono.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-void text-text-primary antialiased">
+        <ScrollTrail />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

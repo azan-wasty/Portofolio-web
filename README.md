@@ -1,8 +1,9 @@
 # Azan Wasty — Portfolio
 
-A personal portfolio site with a cyberpunk visual identity: neon
-magenta/cyan on a void-black base, glitch-text hero, scanline overlay,
-Orbitron display type paired with Space Mono for utility text.
+A personal portfolio site with a cyberpunk visual identity: hazard
+yellow/red on a void-black base, glitch-text hero, scanline overlay,
+a scroll-velocity motion-trail effect, and Orbitron display type paired
+with Space Mono for utility text.
 
 **Live:** _add your Netlify URL here once deployed_
 
@@ -87,7 +88,11 @@ Railway handles the rest via its Nixpacks builder.
 
 ## Notes for reviewers
 
-- Cyberpunk-genre visual language (neon/glitch/scanlines) is original —
-  no third-party character art, logos, or trademarked assets are used.
+- Cyberpunk-genre visual language (hazard yellow/red, glitch, scanlines) is
+  original — no third-party character art, logos, video, or trademarked
+  assets are used anywhere in this project.
+- `ScrollTrail` (`src/components/ui/ScrollTrail.tsx`) is a canvas component
+  that draws motion streaks scaled to scroll velocity — an original take on
+  a speed-trail interaction, respects `prefers-reduced-motion`.
 - Mobile nav is a client component (`"use client"`) since it needs toggle
   state; everything else stays a server component by default.

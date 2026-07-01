@@ -14,16 +14,16 @@ export function About() {
           </div>
           <dl className="space-y-4 border-l border-void-line pl-6 font-mono text-sm">
             <div>
-              <dt className="text-signal-magenta">Location</dt>
+              <dt className="text-signal-yellow">Location</dt>
               <dd className="text-text-dim">{profile.location}</dd>
             </div>
             <div>
-              <dt className="text-signal-magenta">Focus</dt>
+              <dt className="text-signal-yellow">Focus</dt>
               <dd className="text-text-dim">Full-stack + recommendation systems</dd>
             </div>
             <div>
-              <dt className="text-signal-magenta">Status</dt>
-              <dd className="text-signal-cyan">Currently interning — Educura (LMS)</dd>
+              <dt className="text-signal-yellow">Status</dt>
+              <dd className="text-signal-red">Currently interning — Educura (LMS)</dd>
             </div>
           </dl>
         </div>

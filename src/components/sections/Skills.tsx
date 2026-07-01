@@ -10,7 +10,7 @@ export function Skills() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {skillGroups.map((group) => (
             <div key={group.id} className="border border-void-line bg-void-raised p-5">
-              <h3 className="mb-4 font-mono text-xs uppercase tracking-widest text-signal-magenta">
+              <h3 className="mb-4 font-mono text-xs uppercase tracking-widest text-signal-yellow">
                 {group.label}
               </h3>
               <div className="flex flex-wrap gap-2">

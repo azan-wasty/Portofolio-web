@@ -1,14 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --color-void: #0a0a0f;
-  --color-void-raised: #121218;
-  --color-void-line: #24242e;
-  --color-signal-cyan: #00fff5;
-  --color-signal-magenta: #ff2e63;
-  --color-signal-yellow: #f5d90a;
-  --color-text-primary: #eaeaf0;
-  --color-text-dim: #8b8b9a;
+  --color-void: #08080a;
+  --color-void-raised: #131311;
+  --color-void-line: #2c2b23;
+  --color-signal-yellow: #fcee0a;
+  --color-signal-red: #ff2e2e;
+  --color-text-primary: #f2f2ea;
+  --color-text-dim: #8f8f85;
 
   --font-display: var(--font-orbitron);
   --font-mono: var(--font-space-mono);
@@ -18,8 +17,7 @@
   --color-void: var(--color-void);
   --color-void-raised: var(--color-void-raised);
   --color-void-line: var(--color-void-line);
-  --color-signal-cyan: var(--color-signal-cyan);
-  --color-signal-magenta: var(--color-signal-magenta);
+  --color-signal-red: var(--color-signal-red);
   --color-signal-yellow: var(--color-signal-yellow);
   --color-text-primary: var(--color-text-primary);
   --color-text-dim: var(--color-text-dim);
@@ -38,7 +36,7 @@ body {
 }
 
 ::selection {
-  background: var(--color-signal-magenta);
+  background: var(--color-signal-yellow);
   color: var(--color-void);
 }
 
@@ -70,13 +68,13 @@ body {
 
 .glitch::before {
   left: 2px;
-  text-shadow: -1px 0 var(--color-signal-magenta);
+  text-shadow: -1px 0 var(--color-signal-yellow);
   animation: glitch-slice-1 4.5s infinite linear alternate-reverse;
 }
 
 .glitch::after {
   left: -2px;
-  text-shadow: 1px 0 var(--color-signal-cyan);
+  text-shadow: 1px 0 var(--color-signal-red);
   animation: glitch-slice-2 3.5s infinite linear alternate-reverse;
 }
 

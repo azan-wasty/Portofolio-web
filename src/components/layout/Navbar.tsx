@@ -12,7 +12,7 @@ export function Navbar() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link
           href="#home"
-          className="font-display text-sm tracking-[0.2em] text-signal-cyan"
+          className="font-display text-sm tracking-[0.2em] text-signal-red"
           onClick={() => setIsMenuOpen(false)}
         >
           {profile.name.toUpperCase()}
@@ -23,7 +23,7 @@ export function Navbar() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="transition-colors hover:text-signal-magenta"
+                className="transition-colors hover:text-signal-yellow"
               >
                 {link.label}
               </Link>
@@ -39,12 +39,12 @@ export function Navbar() {
           className="flex h-9 w-9 flex-col items-center justify-center gap-1.5 border border-void-line sm:hidden"
         >
           <span
-            className={`h-px w-5 bg-signal-cyan transition-transform ${
+            className={`h-px w-5 bg-signal-red transition-transform ${
               isMenuOpen ? "translate-y-[3px] rotate-45" : ""
             }`}
           />
           <span
-            className={`h-px w-5 bg-signal-cyan transition-transform ${
+            className={`h-px w-5 bg-signal-red transition-transform ${
               isMenuOpen ? "-translate-y-[3px] -rotate-45" : ""
             }`}
           />
@@ -58,7 +58,7 @@ export function Navbar() {
               <Link
                 href={link.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="transition-colors hover:text-signal-magenta"
+                className="transition-colors hover:text-signal-yellow"
               >
                 {link.label}
               </Link>

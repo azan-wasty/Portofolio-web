@@ -17,7 +17,7 @@ export function Footer() {
                 href={link.href}
                 target={link.icon === "mail" ? undefined : "_blank"}
                 rel={link.icon === "mail" ? undefined : "noopener noreferrer"}
-                className="transition-colors hover:text-signal-cyan"
+                className="transition-colors hover:text-signal-red"
               >
                 {link.label}
               </Link>

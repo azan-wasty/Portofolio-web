@@ -7,7 +7,7 @@ interface SectionHeadingProps {
 export function SectionHeading({ index, title, subtitle }: SectionHeadingProps) {
   return (
     <div className="mb-12 flex items-baseline gap-4 border-b border-void-line pb-4">
-      <span className="font-mono text-sm text-signal-magenta">{index}</span>
+      <span className="font-mono text-sm text-signal-yellow">{index}</span>
       <div>
         <h2 className="font-display text-2xl tracking-wide text-text-primary sm:text-3xl">
           {title}

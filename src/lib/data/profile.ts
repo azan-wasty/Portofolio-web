@@ -5,7 +5,7 @@ export const profile = {
   role: "Software Engineer / Data Science",
   location: "Lahore, Pakistan",
   summary:
-    "Second-year Data Science student and full-stack developer. Currently interning on Educura, an LMS product built on React, Node, and PostgreSQL. Building systems that learn what people actually like.",
+    "Second-year Data Science student and full-stack developer. Currently interning Oriental Nippon Develpoment. Building systems that learn what people actually like.",
   longBio:
     "I build full-stack products end to end — from a Postgres schema to a shipped UI. Most of my personal work centers on recommendation systems: scoring engines, ingestion pipelines, and the kind of small architectural decisions (state machines, polymorphism, dedup cursors) that keep a codebase honest as it grows.",
 };

@@ -3,6 +3,7 @@ import { Orbitron, Space_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollTrail } from "@/components/ui/ScrollTrail";
+import { SandevistanTrail } from "@/components/ui/SandevistanTrail";
 import "./globals.css";
 
 const orbitron = Orbitron({
@@ -20,7 +21,7 @@ const spaceMono = Space_Mono({
 export const metadata: Metadata = {
   title: "Azan Wasty — Software Engineer",
   description:
-    "Portfolio of Azan Wasty — full-stack developer and data science student building recommendation systems and web applications.",
+    "Portfolio of Azan Wasty — full-stack developer and data science student.",
 };
 
 export default function RootLayout({
@@ -35,6 +36,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-void text-text-primary antialiased">
         <ScrollTrail />
+        <SandevistanTrail />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

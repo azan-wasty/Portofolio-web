@@ -9,7 +9,7 @@ export const skillGroups: SkillGroup[] = [
   {
     id: "backend",
     label: "Backend",
-    skills: ["Node.js", "Express", "FastAPI", "Prisma", "REST APIs"],
+    skills: ["Node.js", "Express", "Prisma", "REST APIs"],
   },
   {
     id: "data",

@@ -59,7 +59,7 @@ export function ScrollTrail() {
             x: Math.random() * canvas.width,
             length: Math.min(220, Math.abs(velocityRef.current) * 3),
             opacity: 0.5,
-            color: Math.random() > 0.75 ? "255, 46, 46" : "252, 238, 10",
+            color: Math.random() > 0.75 ? "255, 46, 46" : "10, 10, 10",
           });
         }
       }
@@ -103,7 +103,7 @@ export function ScrollTrail() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-40 mix-blend-screen"
+      className="pointer-events-none fixed inset-0 z-40 mix-blend-multiply"
     />
   );
 }

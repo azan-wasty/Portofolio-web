@@ -8,6 +8,9 @@ export interface Project {
   repoUrl?: string;
   liveUrl?: string;
   featured: boolean;
+  /** Path under /public, e.g. "/projects/loghorizon.jpg". Falls back to a
+   * gradient when omitted — drop your own images into public/projects/. */
+  image?: string;
 }
 
 export interface SkillGroup {

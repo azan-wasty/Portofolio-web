@@ -2,13 +2,13 @@
 
 :root {
   /* Primary — void-black base, hazard yellow/red/cyan accents */
-  --color-void: #e5ff00;
-  --color-void-raised: #e5ff00;
+  --color-void: #fcee0a;
+  --color-void-raised: #131311;
   --color-void-line: rgba(255, 255, 255, 0.12);
-  --color-signal-yellow: #000000;
+  --color-signal-yellow: #fcee0a;
   --color-signal-red: #000000;
   --color-signal-cyan: #000000;
-  --color-text-primary: #0a0a0a;
+  --color-text-primary: #08080a;
   --color-text-dim: #45453f;
 
   --font-display: var(--font-orbitron);
@@ -65,7 +65,7 @@ body {
   padding: 0.1em 0.25em;
 }
 
-.cyber-heading::after {
+.cyber-heading:not(.glitch)::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -169,5 +169,60 @@ body {
 
   .game-menu-item * {
     transition-duration: 0.01ms !important;
+  }
+
+  .wheel-glitch {
+    animation: none !important;
+    filter: none !important;
+  }
+}
+
+/* Glitch-cut burst — fired on the project wheel when switching cards.
+   Punchy clip-path jump-cuts + a quick RGB channel split via filter. */
+.wheel-glitch {
+  animation: wheel-glitch-cut 0.26s steps(2, jump-none) 1;
+}
+
+@keyframes wheel-glitch-cut {
+  0% {
+    clip-path: inset(0 0 0 0);
+    filter: none;
+    transform: translateX(0);
+  }
+
+  15% {
+    clip-path: inset(10% 0 60% 0);
+    filter: hue-rotate(20deg) saturate(2);
+    transform: translateX(-6px);
+  }
+
+  30% {
+    clip-path: inset(55% 0 5% 0);
+    filter: hue-rotate(-20deg) saturate(2);
+    transform: translateX(5px);
+  }
+
+  45% {
+    clip-path: inset(20% 0 40% 0);
+    filter: contrast(1.4);
+    transform: translateX(-3px);
+  }
+
+  60% {
+    clip-path: inset(70% 0 2% 0);
+    filter: hue-rotate(15deg);
+    transform: translateX(4px);
+  }
+
+  80% {
+    clip-path: inset(5% 0 75% 0);
+    filter: none;
+    transform: translateX(-2px);
+  }
+
+  100% {
+    clip-path: inset(0 0 0 0);
+    filter: none;
+    transform: translateX(0);
   }
 }

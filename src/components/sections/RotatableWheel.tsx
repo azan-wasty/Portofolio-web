@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, TouchEvent } from "react";
-import type { Project } from "@/types";
 import { projects } from "@/lib/data/projects";
 import { SkillChip } from "@/components/ui/SkillChip";
 import { NeonButton } from "@/components/ui/NeonButton";
@@ -9,24 +8,41 @@ import { NeonButton } from "@/components/ui/NeonButton";
 export function RotatableWheel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [rotation, setRotation] = useState(0);
+  const [isGlitching, setIsGlitching] = useState(false);
   const isDragging = useRef(false);
   const startX = useRef(0);
   const startRotation = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const glitchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const totalItems = projects.length;
   const theta = 360 / totalItems;
   // Calculate radius of 3D cylinder based on total items
   const radius = Math.round(180 / Math.tan(Math.PI / totalItems));
 
+  // Fires a short glitch-cut burst on the background layer whenever the
+  // active project changes — the visual "cut" that sells the picture swap.
+  const triggerGlitch = () => {
+    if (glitchTimeout.current) clearTimeout(glitchTimeout.current);
+    setIsGlitching(true);
+    glitchTimeout.current = setTimeout(() => setIsGlitching(false), 260);
+  };
+
+  const goTo = (index: number) => {
+    const normalized = ((index % totalItems) + totalItems) % totalItems;
+    if (normalized === activeIndex) return;
+    setActiveIndex(normalized);
+    triggerGlitch();
+  };
+
   const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % totalItems);
     setRotation((r) => r - theta);
+    goTo(activeIndex + 1);
   };
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + totalItems) % totalItems);
     setRotation((r) => r + theta);
+    goTo(activeIndex - 1);
   };
 
   // Mouse Drag / Touch Swipe handlers
@@ -39,8 +55,7 @@ export function RotatableWheel() {
   const handleMouseMove = (e: MouseEvent) => {
     if (!isDragging.current) return;
     const deltaX = e.clientX - startX.current;
-    // Map movement to rotation degrees
-    const currentRot = startRotation.current + (deltaX * 0.18);
+    const currentRot = startRotation.current + deltaX * 0.18;
     setRotation(currentRot);
   };
 
@@ -48,16 +63,14 @@ export function RotatableWheel() {
     if (!isDragging.current) return;
     isDragging.current = false;
 
-    // Snap to nearest index
     const snappedIndex = Math.round(-rotation / theta) % totalItems;
     const normalizedIndex = (snappedIndex + totalItems) % totalItems;
 
-    setActiveIndex(normalizedIndex);
+    if (normalizedIndex !== activeIndex) {
+      goTo(normalizedIndex);
+    }
 
-    // Smoothly snap rotation to match the snapped active index
-    // Keep rotation counter continuous
-    const finalRot = -snappedIndex * theta;
-    setRotation(finalRot);
+    setRotation(-snappedIndex * theta);
   };
 
   const handleTouchStart = (e: TouchEvent) => {
@@ -69,7 +82,7 @@ export function RotatableWheel() {
   const handleTouchMove = (e: TouchEvent) => {
     if (!isDragging.current) return;
     const deltaX = e.touches[0].clientX - startX.current;
-    const currentRot = startRotation.current + (deltaX * 0.25);
+    const currentRot = startRotation.current + deltaX * 0.25;
     setRotation(currentRot);
   };
 
@@ -80,11 +93,16 @@ export function RotatableWheel() {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rotation]);
 
-  // Bind mousewheel/scroll to rotate the projects inside its container
+  useEffect(() => {
+    return () => {
+      if (glitchTimeout.current) clearTimeout(glitchTimeout.current);
+    };
+  }, []);
+
   const handleWheel = (e: React.WheelEvent) => {
-    // Only intercept if we're hovering the 3D zone
     if (Math.abs(e.deltaY) > 5) {
       e.preventDefault();
       if (e.deltaY > 0) {
@@ -109,11 +127,13 @@ export function RotatableWheel() {
       {/* Degree indicator / Tech specs */}
       <div className="absolute top-2 font-mono text-[10px] text-signal-red/50 uppercase tracking-widest flex gap-8 z-10">
         <span>DEG: {Math.round(rotation % 360)}°</span>
-        <span>INDEX: {activeIndex + 1}/{totalItems}</span>
-        <span>SYSTEM: RUNNING</span>
+        <span>
+          INDEX: {activeIndex + 1}/{totalItems}
+        </span>
+        <span>SYSTEM: {isGlitching ? "GLITCH" : "RUNNING"}</span>
       </div>
 
-      {/* 3D Cylinder Container */}
+      {/* 3D Cylinder Container — glassmorphic faces over project imagery */}
       <div
         ref={containerRef}
         onWheel={handleWheel}
@@ -121,10 +141,10 @@ export function RotatableWheel() {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleMouseUp}
-        className="relative flex h-[280px] w-full max-w-[420px] cursor-grab items-center justify-center active:cursor-grabbing [perspective:1000px] z-10 overflow-hidden"
+        className="relative flex h-[300px] w-full max-w-[440px] cursor-grab items-center justify-center active:cursor-grabbing [perspective:1000px] z-10 overflow-hidden"
       >
         <div
-          className="relative h-[200px] w-[280px] transition-transform duration-500 ease-out"
+          className="relative h-[220px] w-[300px] transition-transform duration-500 ease-out"
           style={{
             transformStyle: "preserve-3d",
             transform: `translateZ(-${radius}px) rotateY(${rotation}deg)`,
@@ -135,33 +155,60 @@ export function RotatableWheel() {
             return (
               <div
                 key={project.id}
-                className="absolute inset-0 flex flex-col justify-between border bg-void-raised/95 p-5 shadow-2xl transition-all duration-300 backface-hidden"
+                className={`absolute inset-0 overflow-hidden border shadow-2xl transition-all duration-300 backface-hidden ${isCurrent && isGlitching ? "wheel-glitch" : ""
+                  }`}
                 style={{
                   transform: `rotateY(${i * theta}deg) translateZ(${radius}px)`,
-                  borderColor: isCurrent ? "var(--color-signal-yellow)" : "var(--color-void-line)",
+                  borderColor: isCurrent
+                    ? "var(--color-signal-yellow)"
+                    : "var(--color-void-line)",
                   opacity: isCurrent ? 1 : 0.35,
-                  boxShadow: isCurrent ? "0 0 15px rgba(252, 238, 10, 0.15)" : "none",
+                  boxShadow: isCurrent
+                    ? "0 0 15px rgba(252, 238, 10, 0.15)"
+                    : "none",
                 }}
               >
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] text-signal-red">ID-{project.id.slice(0, 4).toUpperCase()}</span>
-                    <span className="font-mono text-[10px] text-text-dim">0{i + 1}</span>
-                  </div>
-                  <h3 className="font-display mt-2 text-md tracking-wider text-text-primary uppercase truncate">
-                    {project.title}
-                  </h3>
-                  <p className="mt-1 font-mono text-[10px] text-signal-red line-clamp-2 leading-relaxed">
-                    {project.tagline}
-                  </p>
-                </div>
+                {/* Background image (or fallback gradient) layer */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{
+                    backgroundImage: project.image
+                      ? `url(${project.image})`
+                      : "linear-gradient(135deg, var(--color-void-raised), var(--color-void))",
+                  }}
+                />
+                {/* Glass overlay so text stays legible over any image */}
+                <div className="absolute inset-0 bg-void/55 backdrop-blur-md" />
 
-                <div className="flex flex-wrap gap-1">
-                  {project.stack.slice(0, 3).map((tech) => (
-                    <span key={tech} className="border border-void-line px-1.5 py-0.5 font-mono text-[9px] text-text-dim">
-                      {tech}
-                    </span>
-                  ))}
+                {/* Card content */}
+                <div className="relative z-10 flex h-full flex-col justify-between border border-white/10 p-5">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[10px] text-signal-red">
+                        ID-{project.id.slice(0, 4).toUpperCase()}
+                      </span>
+                      <span className="font-mono text-[10px] text-text-dim">
+                        0{i + 1}
+                      </span>
+                    </div>
+                    <h3 className="font-display mt-2 text-md tracking-wider text-text-primary uppercase truncate">
+                      {project.title}
+                    </h3>
+                    <p className="mt-1 font-mono text-[10px] text-signal-red line-clamp-2 leading-relaxed">
+                      {project.tagline}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1">
+                    {project.stack.slice(0, 3).map((tech) => (
+                      <span
+                        key={tech}
+                        className="border border-white/20 bg-black/30 px-1.5 py-0.5 font-mono text-[9px] text-text-dim"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             );
@@ -179,7 +226,6 @@ export function RotatableWheel() {
           &lt;
         </button>
 
-        {/* Progress track */}
         <div className="flex h-1 w-32 bg-void-line relative">
           <div
             className="h-full bg-signal-yellow transition-all duration-300"
@@ -198,8 +244,11 @@ export function RotatableWheel() {
         </button>
       </div>
 
-      {/* Highlight/Detail Display of Active Project */}
-      <div className="mt-8 w-full max-w-2xl border border-void-line bg-void-raised/50 p-6 relative z-10 transition-all duration-300">
+      {/* Highlight/Detail Display of Active Project — also glassmorphic */}
+      <div
+        className={`mt-8 w-full max-w-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 relative z-10 transition-all duration-300 ${isGlitching ? "wheel-glitch" : ""
+          }`}
+      >
         <div className="absolute left-0 top-0 h-1 w-12 bg-signal-yellow" />
         <div className="absolute right-0 bottom-0 h-1 w-12 bg-signal-red" />
 

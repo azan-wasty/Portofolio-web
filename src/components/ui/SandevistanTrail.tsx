@@ -71,7 +71,7 @@ export function SandevistanTrail() {
             vx: (Math.random() - 0.5) * (speedRef.current * 0.2),
             vy: (Math.random() - 0.5) * (speedRef.current * 0.2),
             size: Math.random() * 3 + 1,
-            color: Math.random() > 0.4 ? "252, 238, 10" : "255, 46, 46", // yellow vs red
+            color: Math.random() > 0.4 ? "10, 10, 10" : "255, 46, 46", // black vs red
             life: 1,
             maxLife: Math.random() * 20 + 10,
           });
@@ -98,18 +98,18 @@ export function SandevistanTrail() {
         // Draw trailing afterimage paths
         // We select key intervals to render distinct "ghosts"
         const ghostIntervals = isSandeActive ? [2, 5, 8, 12] : [3, 7];
-        
+
         ghostIntervals.forEach((offset, idx) => {
           const pointIndex = points.length - 1 - offset;
           if (pointIndex >= 0) {
             const p = points[pointIndex];
             const age = now - p.time;
             const opacity = Math.max(0, 1 - age / 350) * 0.35;
-            
+
             // Draw ghost triangle or holographic crosshair
-            ctx.strokeStyle = idx % 2 === 0 ? "rgba(255, 46, 46, " + opacity + ")" : "rgba(252, 238, 10, " + opacity + ")";
+            ctx.strokeStyle = idx % 2 === 0 ? "rgba(255, 46, 46, " + opacity + ")" : "rgba(10, 10, 10, " + opacity + ")";
             ctx.lineWidth = 1;
-            
+
             // Draw tech-bracket cursor indicator
             ctx.beginPath();
             const size = 8 + idx * 3;
@@ -117,7 +117,7 @@ export function SandevistanTrail() {
             ctx.moveTo(p.x - size, p.y - size / 2);
             ctx.lineTo(p.x - size, p.y - size);
             ctx.lineTo(p.x - size / 2, p.y - size);
-            
+
             ctx.moveTo(p.x + size, p.y - size / 2);
             ctx.lineTo(p.x + size, p.y - size);
             ctx.lineTo(p.x + size / 2, p.y - size);
@@ -151,7 +151,7 @@ export function SandevistanTrail() {
         for (let i = 1; i < points.length; i++) {
           ctx.lineTo(points[i].x, points[i].y);
         }
-        ctx.strokeStyle = "rgba(252, 238, 10, 0.45)";
+        ctx.strokeStyle = "rgba(10, 10, 10, 0.45)";
         ctx.lineWidth = 2;
         ctx.stroke();
       }
@@ -159,7 +159,7 @@ export function SandevistanTrail() {
       // Draw primary cursor target
       if (points.length > 0) {
         const current = points[points.length - 1];
-        ctx.fillStyle = "#fcee0a";
+        ctx.fillStyle = "#0a0a0a";
         ctx.beginPath();
         ctx.arc(current.x, current.y, 3, 0, Math.PI * 2);
         ctx.fill();
@@ -179,10 +179,10 @@ export function SandevistanTrail() {
         p.vy += 0.05; // tiny gravity
         p.life += 1;
         const opacity = Math.max(0, 1 - p.life / p.maxLife);
-        
+
         ctx.fillStyle = `rgba(${p.color}, ${opacity})`;
         ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
-        
+
         return p.life < p.maxLife;
       });
 
@@ -205,7 +205,7 @@ export function SandevistanTrail() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-50 mix-blend-screen"
+      className="pointer-events-none fixed inset-0 z-50 mix-blend-multiply"
     />
   );
 }

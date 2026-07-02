@@ -6,10 +6,10 @@
   --color-void-raised: #e5ff00;
   --color-void-line: rgba(255, 255, 255, 0.12);
   --color-signal-yellow: #000000;
-  --color-signal-red: #ff2e2e;
-  --color-signal-cyan: #00f0ff;
-  --color-text-primary: #f2f2ef;
-  --color-text-dim: #9a9a95;
+  --color-signal-red: #000000;
+  --color-signal-cyan: #000000;
+  --color-text-primary: #0a0a0a;
+  --color-text-dim: #45453f;
 
   --font-display: var(--font-orbitron);
   --font-mono: var(--font-space-mono);
@@ -165,5 +165,9 @@ body {
 
   * {
     scroll-behavior: auto;
+  }
+
+  .game-menu-item * {
+    transition-duration: 0.01ms !important;
   }
 }

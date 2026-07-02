@@ -1,22 +1,23 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Orbitron, Space_Mono } from "next/font/google";
+
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollTrail } from "@/components/ui/ScrollTrail";
 import { SandevistanTrail } from "@/components/ui/SandevistanTrail";
 import "./globals.css";
 
-const orbitron = Orbitron({
-  variable: "--font-orbitron",
-  subsets: ["latin"],
-  weight: ["500", "700", "800", "900"],
-});
+import { Barlow_Condensed, Roboto } from "next/font/google";
 
-const spaceMono = Space_Mono({
-  variable: "--font-space-mono",
+// const barlowCondensed = Barlow_Condensed({
+//   variable: "--font-barlow-condensed",
+//   subsets: ["latin"],
+//   weight: ["400", "500", "600", "700"],
+// });
+const roboto = Roboto({
+  variable: "--font-roboto",
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "500", "700"],
 });
 
 // Signature wordmark face — used sparingly, hero name only. Not for body
@@ -42,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${orbitron.variable} ${spaceMono.variable} ${cyberpunkSignature.variable} h-full`}
+      className={`${cyberpunkSignature.variable} ${roboto.variable} ${cyberpunkSignature.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-void text-text-primary antialiased">
         <ScrollTrail />

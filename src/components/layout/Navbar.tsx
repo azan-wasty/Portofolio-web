@@ -12,7 +12,7 @@ export function Navbar() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link
           href="#home"
-          className="font-display text-sm tracking-[0.2em] text-signal-red font-bold hover:text-void-raised transition-colors"
+          className="font-display text-sm tracking-[0.2em] text-signal-red font-bold hover:text-text-primary transition-colors"
           onClick={() => setIsMenuOpen(false)}
         >
           {profile.name.toUpperCase()}
@@ -39,7 +39,7 @@ export function Navbar() {
           onClick={() => setIsMenuOpen(true)}
           aria-expanded={isMenuOpen}
           aria-label="Open cyberpunk interface drawer"
-          className="flex h-10 px-3 items-center justify-center gap-2 border-2 border-text-primary text-text-primary hover:bg-void-raised hover:text-signal-yellow hover:border-void-raised transition-colors font-mono text-xs uppercase tracking-widest"
+          className="flex h-10 px-3 items-center justify-center gap-2 border-2 border-text-primary text-text-primary hover:bg-signal-yellow hover:text-void transition-colors font-mono text-xs uppercase tracking-widest"
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal-red opacity-75"></span>
@@ -51,21 +51,19 @@ export function Navbar() {
 
       {/* Slide-In Cyberpunk HUD Drawer Menu */}
       <div
-        className={`fixed inset-0 z-[100] bg-void-raised/85 backdrop-blur-sm transition-opacity duration-300 ${
-          isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-[100] bg-void-raised/85 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
         onClick={() => setIsMenuOpen(false)}
       >
         <div
-          className={`absolute right-0 top-0 h-full w-full max-w-[420px] bg-void-raised border-l-4 border-signal-yellow p-8 shadow-2xl transition-transform duration-500 ease-out flex flex-col justify-between font-mono select-none ${
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`absolute right-0 top-0 h-full w-full max-w-[420px] bg-void-raised border-l-4 border-signal-yellow p-8 shadow-2xl transition-transform duration-500 ease-out flex flex-col justify-between font-mono select-none ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+            }`}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Corner decorations */}
           <div className="absolute right-0 bottom-0 w-24 h-24 border-r border-b border-signal-cyan/20 pointer-events-none" />
           <div className="absolute left-0 top-0 w-24 h-24 border-l border-t border-signal-red/20 pointer-events-none" />
-          
+
           <div>
             {/* Header info */}
             <div className="flex items-center justify-between border-b border-neutral-700 pb-4 mb-8">
@@ -84,22 +82,31 @@ export function Navbar() {
               </button>
             </div>
 
-            {/* Menu Links */}
-            <nav className="space-y-6">
+            {/* Menu Links — styled like a game start-screen select list.
+                Whichever option the cursor (or keyboard focus) lands on
+                gets a slanted highlight sweep, scales up, and switches
+                to the signature cyberpunk face. Section names only —
+                this is still the site nav, just skinned as a menu. */}
+            <nav className="game-menu-item flex flex-col">
               {navLinks.map((link, idx) => (
-                <div key={link.href} className="group relative flex items-center">
-                  <span className="text-signal-cyan text-xs mr-4 opacity-50 group-hover:opacity-100 transition-opacity">
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="group relative flex items-center gap-4 px-2 py-4 outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-cyan"
+                >
+                  {/* Slanted selection panel — replaces the old straight bar */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-0 z-0 origin-left -skew-x-12 scale-x-0 bg-signal-yellow transition-transform duration-200 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100"
+                  />
+                  <span className="relative z-10 shrink-0 font-mono text-xs text-signal-cyan opacity-50 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
                     0{idx + 1}//
                   </span>
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="font-display text-2xl tracking-widest text-neutral-300 group-hover:text-signal-yellow transition-colors uppercase relative"
-                  >
+                  <span className="relative z-10 origin-left font-display text-2xl tracking-widest text-text-primary uppercase transition-all duration-200 group-hover:scale-125 group-hover:font-signature group-hover:tracking-wide group-hover:text-void group-focus-visible:scale-125 group-focus-visible:font-signature group-focus-visible:tracking-wide group-focus-visible:text-void">
                     {link.label}
-                    <span className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-0 bg-signal-yellow group-hover:h-5 transition-all duration-200" />
-                  </Link>
-                </div>
+                  </span>
+                </Link>
               ))}
             </nav>
           </div>
@@ -109,10 +116,10 @@ export function Navbar() {
             <h4 className="text-xs text-signal-cyan uppercase tracking-widest">
               SYSTEM DIAGNOSTICS
             </h4>
-            <div className="grid grid-cols-2 gap-2 text-[10px] text-neutral-500">
+            <div className="grid grid-cols-2 gap-2 text-[10px] text-neutral-700">
               <div className="flex justify-between border-b border-neutral-800 pb-1">
                 <span>OS VERSION:</span>
-                <span className="text-neutral-300">EDGERUN_V4.2</span>
+                <span className="text-text-primary">EDGERUN_V4.2</span>
               </div>
               <div className="flex justify-between border-b border-neutral-800 pb-1">
                 <span>COGNITIVE LINK:</span>
@@ -120,7 +127,7 @@ export function Navbar() {
               </div>
               <div className="flex justify-between border-b border-neutral-800 pb-1">
                 <span>BUFFER RUN:</span>
-                <span className="text-neutral-300">99.82%</span>
+                <span className="text-text-primary">99.82%</span>
               </div>
               <div className="flex justify-between border-b border-neutral-800 pb-1">
                 <span>SANDEVISTAN:</span>

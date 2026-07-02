@@ -51,9 +51,9 @@ export function RotatableWheel() {
     // Snap to nearest index
     const snappedIndex = Math.round(-rotation / theta) % totalItems;
     const normalizedIndex = (snappedIndex + totalItems) % totalItems;
-    
+
     setActiveIndex(normalizedIndex);
-    
+
     // Smoothly snap rotation to match the snapped active index
     // Keep rotation counter continuous
     const finalRot = -snappedIndex * theta;
@@ -145,8 +145,8 @@ export function RotatableWheel() {
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] text-signal-red">ID-{project.id.slice(0,4).toUpperCase()}</span>
-                    <span className="font-mono text-[10px] text-text-dim">0{i+1}</span>
+                    <span className="font-mono text-[10px] text-signal-red">ID-{project.id.slice(0, 4).toUpperCase()}</span>
+                    <span className="font-mono text-[10px] text-text-dim">0{i + 1}</span>
                   </div>
                   <h3 className="font-display mt-2 text-md tracking-wider text-text-primary uppercase truncate">
                     {project.title}
@@ -202,7 +202,7 @@ export function RotatableWheel() {
       <div className="mt-8 w-full max-w-2xl border border-void-line bg-void-raised/50 p-6 relative z-10 transition-all duration-300">
         <div className="absolute left-0 top-0 h-1 w-12 bg-signal-yellow" />
         <div className="absolute right-0 bottom-0 h-1 w-12 bg-signal-red" />
-        
+
         <header className="mb-4">
           <div className="flex items-center gap-3">
             <h4 className="font-display text-xl tracking-wider text-signal-yellow uppercase">

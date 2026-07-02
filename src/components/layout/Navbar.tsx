@@ -18,7 +18,6 @@ export function Navbar() {
           {profile.name.toUpperCase()}
         </Link>
 
-        {/* Desktop Navigation Links — clustered left, next to the logo */}
         <ul className="hidden gap-8 font-mono text-xs uppercase tracking-wider text-[#fcee0a] sm:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
@@ -33,7 +32,6 @@ export function Navbar() {
           ))}
         </ul>
 
-        {/* Cyberpunk HUD Launcher Button */}
         <button
           type="button"
           onClick={() => setIsMenuOpen(true)}
@@ -49,7 +47,6 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* Slide-In Cyberpunk HUD Drawer Menu */}
       <div
         className={`fixed inset-0 z-[100] bg-void-raised/85 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           }`}
@@ -60,12 +57,10 @@ export function Navbar() {
             }`}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Corner decorations */}
           <div className="absolute right-0 bottom-0 w-24 h-24 border-r border-b border-black/20 pointer-events-none" />
           <div className="absolute left-0 top-0 w-24 h-24 border-l border-t border-signal-red/40 pointer-events-none" />
 
           <div>
-            {/* Header info */}
             <div className="flex items-center justify-between border-b border-black/30 pb-4 mb-8">
               <div className="flex flex-col">
                 <span className="text-[10px] text-signal-red font-bold">SECURITY LAYER: EXT-05</span>
@@ -82,10 +77,6 @@ export function Navbar() {
               </button>
             </div>
 
-            {/* Menu Links — styled like a game start-screen select list.
-                Section names render permanently in the signature
-                cyberpunk face (not just on hover); the hover/focus state
-                only adds the slanted highlight sweep now. */}
             <nav className="game-menu-item flex flex-col">
               {navLinks.map((link, idx) => (
                 <Link
@@ -94,7 +85,6 @@ export function Navbar() {
                   onClick={() => setIsMenuOpen(false)}
                   className="group relative flex items-center gap-4 px-2 py-4 outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                 >
-                  {/* Slanted selection panel — replaces the old straight bar */}
                   <span
                     aria-hidden="true"
                     className="absolute inset-0 z-0 origin-left -skew-x-12 scale-x-0 bg-black transition-transform duration-200 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100"
@@ -110,7 +100,6 @@ export function Navbar() {
             </nav>
           </div>
 
-          {/* Diagnostics / System Status Widget */}
           <div className="border-t border-black/30 pt-6 mt-8 space-y-4">
             <h4 className="text-xs text-black/70 uppercase tracking-widest font-bold">
               SYSTEM DIAGNOSTICS

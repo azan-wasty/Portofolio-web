@@ -17,11 +17,8 @@ export function RotatableWheel() {
 
   const totalItems = projects.length;
   const theta = 360 / totalItems;
-  // Calculate radius of 3D cylinder based on total items
   const radius = Math.round(180 / Math.tan(Math.PI / totalItems));
 
-  // Fires a short glitch-cut burst on the background layer whenever the
-  // active project changes — the visual "cut" that sells the picture swap.
   const triggerGlitch = () => {
     if (glitchTimeout.current) clearTimeout(glitchTimeout.current);
     setIsGlitching(true);
@@ -45,7 +42,6 @@ export function RotatableWheel() {
     goTo(activeIndex - 1);
   };
 
-  // Mouse Drag / Touch Swipe handlers
   const handleMouseDown = (e: React.MouseEvent) => {
     isDragging.current = true;
     startX.current = e.clientX;
@@ -117,14 +113,12 @@ export function RotatableWheel() {
 
   return (
     <div className="relative flex flex-col items-center justify-center py-12 select-none">
-      {/* HUD Circular background decoration */}
       <div className="pointer-events-none absolute h-[380px] w-[380px] rounded-full border border-dashed border-signal-red/20 flex items-center justify-center animate-spin [animation-duration:120s] z-0">
         <div className="h-[340px] w-[340px] rounded-full border border-signal-yellow/15 flex items-center justify-center">
           <div className="h-[280px] w-[280px] rounded-full border border-void-line" />
         </div>
       </div>
 
-      {/* Degree indicator / Tech specs */}
       <div className="absolute top-2 font-mono text-[10px] text-signal-red/50 uppercase tracking-widest flex gap-8 z-10">
         <span>DEG: {Math.round(rotation % 360)}°</span>
         <span>
@@ -133,7 +127,6 @@ export function RotatableWheel() {
         <span>SYSTEM: {isGlitching ? "GLITCH" : "RUNNING"}</span>
       </div>
 
-      {/* 3D Cylinder Container — glassmorphic faces over project imagery */}
       <div
         ref={containerRef}
         onWheel={handleWheel}
@@ -168,19 +161,16 @@ export function RotatableWheel() {
                     : "none",
                 }}
               >
-                {/* Background image (or fallback gradient) layer */}
                 <div
                   className="absolute inset-0 bg-cover bg-center"
                   style={{
                     backgroundImage: project.image
                       ? `url(${project.image})`
-                      : "linear-gradient(135deg, var(--color-void-raised), var(--color-void))",
+                      : "linear-gradient(135deg, #1a1a17, #0a0a0a)",
                   }}
                 />
-                {/* Glass overlay so text stays legible over any image */}
-                <div className="absolute inset-0 bg-void/55 backdrop-blur-md" />
+                <div className="absolute inset-0 bg-black/55 backdrop-blur-md" />
 
-                {/* Card content */}
                 <div className="relative z-10 flex h-full flex-col justify-between border border-white/10 p-5">
                   <div>
                     <div className="flex items-center justify-between">
@@ -216,7 +206,6 @@ export function RotatableWheel() {
         </div>
       </div>
 
-      {/* Slider / Arrow Navigation */}
       <div className="mt-6 flex items-center gap-6 z-10">
         <button
           onClick={handlePrev}
@@ -244,7 +233,6 @@ export function RotatableWheel() {
         </button>
       </div>
 
-      {/* Highlight/Detail Display of Active Project — also glassmorphic */}
       <div
         className={`mt-8 w-full max-w-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 relative z-10 transition-all duration-300 ${isGlitching ? "wheel-glitch" : ""
           }`}
@@ -266,7 +254,7 @@ export function RotatableWheel() {
           </p>
         </header>
 
-        <p className="mb-4 font-mono text-sm leading-relaxed text-text-dim">
+        <p className="mb-4 font-mono font-normal text-sm leading-relaxed text-text-dim">
           {activeProject.description}
         </p>
 

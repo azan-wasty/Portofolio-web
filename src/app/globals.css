@@ -6,8 +6,8 @@
   --color-void-raised: #131311;
   --color-void-line: rgba(255, 255, 255, 0.12);
   --color-signal-yellow: #fcee0a;
-  --color-signal-red: #000000;
-  --color-signal-cyan: #000000;
+  --color-signal-red: #ff0000;
+  --color-signal-cyan: #00ffd5;
   --color-text-primary: #08080a;
   --color-text-dim: #45453f;
 

@@ -4,8 +4,13 @@ import { useEffect, useRef, useState, TouchEvent } from "react";
 import { projects } from "@/lib/data/projects";
 import { SkillChip } from "@/components/ui/SkillChip";
 import { NeonButton } from "@/components/ui/NeonButton";
+import type { Project } from "@/types";
 
-export function RotatableWheel() {
+interface RotatableWheelProps {
+  onActiveProjectChange?: (project: Project) => void;
+}
+
+export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [rotation, setRotation] = useState(0);
   const [isGlitching, setIsGlitching] = useState(false);
@@ -98,6 +103,15 @@ export function RotatableWheel() {
     };
   }, []);
 
+  const activeProject = projects[activeIndex];
+
+  // Tell the parent (Projects.tsx) which project is active so it can drive
+  // the full-section background image. Fires on mount too.
+  useEffect(() => {
+    onActiveProjectChange?.(activeProject);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeProject]);
+
   const handleWheel = (e: React.WheelEvent) => {
     if (Math.abs(e.deltaY) > 5) {
       e.preventDefault();
@@ -108,8 +122,6 @@ export function RotatableWheel() {
       }
     }
   };
-
-  const activeProject = projects[activeIndex];
 
   return (
     <div className="relative flex flex-col items-center justify-center py-12 select-none">
@@ -159,32 +171,24 @@ export function RotatableWheel() {
                   boxShadow: isCurrent
                     ? "0 0 15px rgba(252, 238, 10, 0.15)"
                     : "none",
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03))",
                 }}
               >
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: project.image
-                      ? `url(${project.image})`
-                      : "linear-gradient(135deg, #1a1a17, #0a0a0a)",
-                  }}
-                />
-                <div className="absolute inset-0 bg-black/55 backdrop-blur-md" />
-
-                <div className="relative z-10 flex h-full flex-col justify-between border border-white/10 p-5">
+                <div className="relative z-10 flex h-full flex-col justify-between border border-white/15 p-5">
                   <div>
                     <div className="flex items-center justify-between">
                       <span className="font-mono text-[10px] text-signal-red">
                         ID-{project.id.slice(0, 4).toUpperCase()}
                       </span>
-                      <span className="font-mono text-[10px] text-text-dim">
+                      <span className="font-mono text-[10px] text-white/50">
                         0{i + 1}
                       </span>
                     </div>
-                    <h3 className="font-display mt-2 text-md tracking-wider text-text-primary uppercase truncate">
+                    <h3 className="font-display mt-2 text-md tracking-wider text-white uppercase truncate [text-shadow:0_1px_4px_rgba(0,0,0,0.6)]">
                       {project.title}
                     </h3>
-                    <p className="mt-1 font-mono text-[10px] text-signal-red line-clamp-2 leading-relaxed">
+                    <p className="mt-1 font-mono text-[10px] text-signal-yellow line-clamp-2 leading-relaxed">
                       {project.tagline}
                     </p>
                   </div>
@@ -193,7 +197,7 @@ export function RotatableWheel() {
                     {project.stack.slice(0, 3).map((tech) => (
                       <span
                         key={tech}
-                        className="border border-white/20 bg-black/30 px-1.5 py-0.5 font-mono text-[9px] text-text-dim"
+                        className="border border-white/25 bg-black/30 px-1.5 py-0.5 font-mono text-[9px] text-white/70"
                       >
                         {tech}
                       </span>
@@ -209,7 +213,7 @@ export function RotatableWheel() {
       <div className="mt-6 flex items-center gap-6 z-10">
         <button
           onClick={handlePrev}
-          className="flex h-10 w-10 items-center justify-center border border-void-line bg-void text-signal-yellow hover:border-signal-yellow hover:text-signal-yellow font-mono text-sm active:bg-void-raised"
+          className="flex h-10 w-10 items-center justify-center border border-void-line bg-void-raised text-signal-yellow hover:border-signal-yellow hover:text-signal-yellow font-mono text-sm active:bg-void"
           aria-label="Previous Project"
         >
           &lt;
@@ -226,7 +230,7 @@ export function RotatableWheel() {
 
         <button
           onClick={handleNext}
-          className="flex h-10 w-10 items-center justify-center border border-void-line bg-void text-signal-yellow hover:border-signal-yellow hover:text-signal-yellow font-mono text-sm active:bg-void-raised"
+          className="flex h-10 w-10 items-center justify-center border border-void-line bg-void-raised text-signal-yellow hover:border-signal-yellow hover:text-signal-yellow font-mono text-sm active:bg-void"
           aria-label="Next Project"
         >
           &gt;
@@ -234,7 +238,7 @@ export function RotatableWheel() {
       </div>
 
       <div
-        className={`mt-8 w-full max-w-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 relative z-10 transition-all duration-300 ${isGlitching ? "wheel-glitch" : ""
+        className={`mt-8 w-full max-w-2xl self-start border border-signal-yellow/20 bg-void-raised/95 p-6 relative z-10 transition-all duration-300 ${isGlitching ? "wheel-glitch" : ""
           }`}
       >
         <div className="absolute left-0 top-0 h-1 w-12 bg-signal-yellow" />
@@ -249,19 +253,19 @@ export function RotatableWheel() {
               ACTIVE NODE
             </span>
           </div>
-          <p className="mt-1 font-mono text-xs text-text-primary">
+          <p className="mt-1 font-mono text-xs text-signal-yellow/70">
             {activeProject.tagline}
           </p>
         </header>
 
-        <p className="mb-4 font-mono font-normal text-sm leading-relaxed text-text-dim">
+        <p className="mb-4 font-mono font-normal text-sm leading-relaxed text-signal-yellow/80">
           {activeProject.description}
         </p>
 
         <h5 className="font-display text-xs uppercase tracking-widest text-signal-red mb-2">
           Project Highlights
         </h5>
-        <ul className="mb-5 space-y-1.5 font-mono text-xs text-text-dim">
+        <ul className="mb-5 space-y-1.5 font-mono text-xs text-signal-yellow/80">
           {activeProject.highlights.map((highlight) => (
             <li key={highlight} className="flex gap-2">
               <span className="text-signal-yellow">›</span>

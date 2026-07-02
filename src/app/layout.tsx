@@ -1,24 +1,15 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Chakra_Petch, Space_Mono } from "next/font/google";
+// stub
 
-import "./globals.css";
-import { ScrollTrail } from "@/components/ui/ScrollTrail";
-import { SandevistanTrail } from "@/components/ui/SandevistanTrail";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollTrail } from "@/components/ui/ScrollTrail";
+import { SandevistanTrail } from "@/components/ui/SandevistanTrail";
+import { CyberGrid } from "@/components/ui/CyberGrid";
+import "./globals.css";
 
-const ChakraPetch = Chakra_Petch({
-  variable: "--font-chakra-petch",
-  subsets: ["latin"],
-  weight: ["700"],
-});
 
-const spaceMono = Space_Mono({
-  variable: "--font-space-mono",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
 
 // Signature wordmark face — used on major headings only (hero name, nav
 // logo, section titles). Not for body/UI text or copy with punctuation:
@@ -45,9 +36,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${ChakraPetch.variable} ${spaceMono.variable} ${cyberpunkSignature.variable} h-full`}
+      className={`${cyberpunkSignature.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-void text-text-primary antialiased">
+        <CyberGrid />
         <ScrollTrail />
         <SandevistanTrail />
         <Navbar />

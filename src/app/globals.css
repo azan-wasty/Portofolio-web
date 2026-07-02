@@ -2,14 +2,14 @@
 
 :root {
   /* Primary — void-black base, hazard yellow/red/cyan accents */
-  --color-void: #fcee0a;
+  --color-void: #08080a;
   --color-void-raised: #131311;
   --color-void-line: rgba(255, 255, 255, 0.12);
   --color-signal-yellow: #fcee0a;
-  --color-signal-red: #ff0000;
-  --color-signal-cyan: #00ffd5;
-  --color-text-primary: #08080a;
-  --color-text-dim: #45453f;
+  --color-signal-red: #ff2e2e;
+  --color-signal-cyan: #00e5ff;
+  --color-text-primary: #f2f2ea;
+  --color-text-dim: #8f8f85;
 
   --font-display: var(--font-orbitron);
   --font-mono: var(--font-space-mono);
@@ -38,6 +38,18 @@ body {
   background: var(--color-void);
   color: var(--color-text-primary);
   font-family: var(--font-mono);
+}
+
+/* Space Mono and Orbitron both read thin at their default 400 weight —
+   bump the baseline so the whole site doesn't look underweight next to
+   the heavier Cyberpunk.ttf signature face. Anything that wants a
+   specific weight (font-bold, font-black, etc.) still overrides this. */
+.font-mono {
+  font-weight: 700;
+}
+
+.font-display {
+  font-weight: 700;
 }
 
 ::selection {
@@ -155,28 +167,6 @@ body {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-
-  .glitch::before,
-  .glitch::after {
-    animation: none;
-    content: none;
-  }
-
-  * {
-    scroll-behavior: auto;
-  }
-
-  .game-menu-item * {
-    transition-duration: 0.01ms !important;
-  }
-
-  .wheel-glitch {
-    animation: none !important;
-    filter: none !important;
-  }
-}
-
 /* Glitch-cut burst — fired on the project wheel when switching cards.
    Punchy clip-path jump-cuts + a quick RGB channel split via filter. */
 .wheel-glitch {
@@ -224,5 +214,249 @@ body {
     clip-path: inset(0 0 0 0);
     filter: none;
     transform: translateX(0);
+  }
+}
+
+/* Ambient background — circuit grid + drifting glows behind everything */
+.cyber-grid-lines {
+  background-image:
+    linear-gradient(rgba(252, 238, 10, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(252, 238, 10, 0.07) 1px, transparent 1px),
+    linear-gradient(rgba(255, 46, 46, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 46, 46, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px, 56px 56px, 280px 280px, 280px 280px;
+  animation: grid-drift 18s linear infinite;
+}
+
+@keyframes grid-drift {
+  from {
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+
+  to {
+    background-position: 56px 56px, 56px 56px, 280px 280px, 280px 280px;
+  }
+}
+
+.cyber-glow-yellow {
+  background: radial-gradient(circle, rgba(252, 238, 10, 0.10), transparent 70%);
+  filter: blur(40px);
+  animation: glow-drift-a 22s ease-in-out infinite;
+}
+
+.cyber-glow-red {
+  background: radial-gradient(circle, rgba(255, 46, 46, 0.08), transparent 70%);
+  filter: blur(40px);
+  animation: glow-drift-b 26s ease-in-out infinite;
+}
+
+@keyframes glow-drift-a {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(80px, 60px);
+  }
+}
+
+@keyframes glow-drift-b {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-60px, -80px);
+  }
+}
+
+/* Scroll-reveal — sections fade/slide/glitch in via IntersectionObserver
+   toggling data-visible on the wrapper. Starts hidden so content isn't
+   flashed before JS attaches (progressive enhancement: if JS fails, the
+   `no-js` fallback below keeps everything visible). */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(4px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out, filter 0.6s ease-out;
+}
+
+.scroll-reveal[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Full-section project background glitch transition — adapted from a
+   well-known CSS glitch-image pattern (duplicate layer + mix-blend-mode:
+   hard-light + independent hue-rotate/position shifts). Runs once per
+   mount: Projects.tsx changes this element's `key` on every project
+   switch, which remounts it and replays the animation. */
+.glitch-bg {
+  animation: glitch-bg-cut 0.5s steps(2, jump-none) 1;
+}
+
+.glitch-bg::before,
+.glitch-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: hard-light;
+}
+
+.glitch-bg::before {
+  animation: glitch-bg-shift-a 0.5s steps(2, jump-none) 1;
+}
+
+.glitch-bg::after {
+  animation: glitch-bg-shift-b 0.5s steps(2, jump-none) 1;
+}
+
+@keyframes glitch-bg-cut {
+  0% {
+    clip-path: inset(0 0 0 0);
+    transform: translateX(0);
+  }
+
+  15% {
+    clip-path: inset(10% 0 60% 0);
+    transform: translateX(-2%);
+  }
+
+  30% {
+    clip-path: inset(55% 0 5% 0);
+    transform: translateX(2%);
+  }
+
+  45% {
+    clip-path: inset(20% 0 40% 0);
+    transform: translateX(-1%);
+  }
+
+  60% {
+    clip-path: inset(70% 0 2% 0);
+    transform: translateX(1%);
+  }
+
+  80% {
+    clip-path: inset(5% 0 75% 0);
+    transform: translateX(-1%);
+  }
+
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translateX(0);
+  }
+}
+
+@keyframes glitch-bg-shift-a {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+    filter: hue-rotate(0deg);
+  }
+
+  25% {
+    transform: translate(10px, -6px);
+    opacity: 0.65;
+    filter: hue-rotate(90deg);
+  }
+
+  50% {
+    transform: translate(-8px, 4px);
+    opacity: 0.5;
+    filter: hue-rotate(-45deg);
+  }
+
+  75% {
+    transform: translate(6px, 3px);
+    opacity: 0.3;
+    filter: hue-rotate(30deg);
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 0;
+    filter: hue-rotate(0deg);
+  }
+}
+
+@keyframes glitch-bg-shift-b {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+    filter: hue-rotate(0deg);
+  }
+
+  25% {
+    transform: translate(-10px, 6px);
+    opacity: 0.65;
+    filter: hue-rotate(-90deg);
+  }
+
+  50% {
+    transform: translate(8px, -4px);
+    opacity: 0.5;
+    filter: hue-rotate(45deg);
+  }
+
+  75% {
+    transform: translate(-6px, -3px);
+    opacity: 0.3;
+    filter: hue-rotate(-30deg);
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 0;
+    filter: hue-rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .glitch::before,
+  .glitch::after {
+    animation: none;
+    content: none;
+  }
+
+  * {
+    scroll-behavior: auto;
+  }
+
+  .game-menu-item * {
+    transition-duration: 0.01ms !important;
+  }
+
+  .wheel-glitch {
+    animation: none !important;
+    filter: none !important;
+  }
+
+  .cyber-grid-lines,
+  .cyber-glow-yellow,
+  .cyber-glow-red {
+    animation: none;
+  }
+
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .glitch-bg::before,
+  .glitch-bg::after {
+    animation: none !important;
+    content: none !important;
   }
 }

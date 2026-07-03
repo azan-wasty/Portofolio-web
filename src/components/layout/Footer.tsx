@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="border-t border-void-line px-6 py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 font-mono text-xs text-text-dim sm:flex-row">
         <p>
-          © {year} {profile.name} — built with Next.js
+          © {year} {profile.name}
         </p>
         <ul className="flex gap-6">
           {socialLinks.map((link) => (

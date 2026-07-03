@@ -16,6 +16,7 @@ export const projects: Project[] = [
     ],
     repoUrl: "https://github.com/azan-wasty/LogHorizon",
     featured: true,
+    image: "/projects/image.png",
   },
   {
     id: "social-graph",
@@ -43,6 +44,7 @@ export const projects: Project[] = [
       "JWT-based auth with role-based access control",
     ],
     featured: false,
+    image: "/projects/fumble.png",
   },
   {
     id: "parkinsons-ml",
@@ -71,5 +73,6 @@ export const projects: Project[] = [
       "Manual memory management, no leaks under Valgrind",
     ],
     featured: false,
+    image: "/projects/pacman.png",
   },
 ];

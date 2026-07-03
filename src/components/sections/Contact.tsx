@@ -28,7 +28,7 @@ export function Contact() {
                 }
                 className="flex items-center gap-3 text-text-dim transition-colors hover:text-signal-red"
               >
-                <span className="text-signal-cyan font-bold">{channel.label}</span>
+                <span className="text-signal-cyan font-mono">{channel.label}</span>
                 {channel.value}
               </a>
             ))}

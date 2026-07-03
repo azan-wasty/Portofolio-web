@@ -69,8 +69,8 @@ export function Navbar() {
           <div>
             <div className="flex items-center justify-between border-b border-[#fcee0a]/20 pb-4 mb-8">
               <div className="flex flex-col">
-                <span className="text-[10px] text-signal-red font-bold">SECURITY LAYER: EXT-05</span>
-                <span className="font-display text-sm tracking-wider text-[#fcee0a] uppercase">
+                <span className="text-[10px] text-signal-red font-mono">SECURITY LAYER: EXT-05</span>
+                <span className="font-mono text-sm tracking-wider text-[#fcee0a] uppercase">
                   HUD NAVIGATION
                 </span>
               </div>
@@ -107,29 +107,29 @@ export function Navbar() {
           </div>
 
           <div className="border-t border-[#fcee0a]/20 pt-6 mt-8 space-y-4">
-            <h4 className="text-xs text-[#fcee0a]/80 uppercase tracking-widest font-bold">
+            <h4 className="text-xs text-[#fcee0a]/80 uppercase tracking-widest font-mono">
               SYSTEM DIAGNOSTICS
             </h4>
             <div className="grid grid-cols-2 gap-2 text-[10px] text-[#fcee0a]/60">
               <div className="flex justify-between border-b border-[#fcee0a]/10 pb-1">
                 <span>OS VERSION:</span>
-                <span className="text-[#fcee0a] font-bold">EDGERUN_V4.2</span>
+                <span className="text-[#fcee0a] font-mono">EDGERUN_V4.2</span>
               </div>
               <div className="flex justify-between border-b border-[#fcee0a]/10 pb-1">
                 <span>COGNITIVE LINK:</span>
-                <span className="text-signal-red font-bold">CONNECTED</span>
+                <span className="text-signal-red font-mono">CONNECTED</span>
               </div>
               <div className="flex justify-between border-b border-[#fcee0a]/10 pb-1">
                 <span>BUFFER RUN:</span>
-                <span className="text-[#fcee0a] font-bold">99.82%</span>
+                <span className="text-[#fcee0a] font-mono">99.82%</span>
               </div>
               <div className="flex justify-between border-b border-[#fcee0a]/10 pb-1">
                 <span>SANDEVISTAN:</span>
-                <span className="text-[#fcee0a] font-bold">READY</span>
+                <span className="text-[#fcee0a] font-mono">READY</span>
               </div>
             </div>
             <div className="bg-[#fcee0a]/5 p-3 border border-[#fcee0a]/10">
-              <div className="text-[9px] text-signal-red flex items-center gap-2 font-bold">
+              <div className="text-[9px] text-signal-red flex items-center gap-2 font-mono">
                 <span className="h-1.5 w-1.5 rounded-full bg-signal-red animate-pulse" />
                 <span>TERMINAL_DECRYPT: IN_PROGRESS</span>
               </div>

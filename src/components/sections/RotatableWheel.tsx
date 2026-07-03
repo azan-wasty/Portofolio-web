@@ -258,7 +258,7 @@ export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
           </p>
         </header>
 
-        <p className="mb-4 font-mono font-normal text-sm leading-relaxed text-signal-yellow/80">
+        <p className="mb-4 font-mono text-sm leading-relaxed text-signal-yellow/80">
           {activeProject.description}
         </p>
 

@@ -11,9 +11,10 @@
   --color-text-primary: #f2f2ea;
   --color-text-dim: #8f8f85;
 
-  --font-display: var(--font-orbitron);
-  --font-mono: var(--font-space-mono);
+
   --font-signature: var(--font-cyberpunk);
+  --font-mono: var(--font-blender-pro);
+  --font-mono: var(--font-blender-pro-bold);
 }
 
 @theme inline {
@@ -43,12 +44,12 @@ body {
 /* Space Mono and Orbitron both read thin at their default 400 weight —
    bump the baseline so the whole site doesn't look underweight next to
    the heavier Cyberpunk.ttf signature face. Anything that wants a
-   specific weight (font-bold, font-black, etc.) still overrides this. */
+   specific weight (font-mono, font-black, etc.) still overrides this. */
 .font-mono {
-  font-weight: 700;
+  font-weight: 400;
 }
 
-.font-display {
+.font-mono {
   font-weight: 700;
 }
 
@@ -458,5 +459,140 @@ body {
   .glitch-bg::after {
     animation: none !important;
     content: none !important;
+  }
+
+  /* Glitch button — adapted from a tested CodePen technique (hard diagonal
+   color-split background + offset box-shadow for a 3D sticker look, then
+   a hover-triggered clip-path slice animation on a duplicate ::after
+   text layer). Source used content:'RESUME_' hardcoded per button; here
+   content: attr(data-text) so any label works — NeonButton sets
+   data-text to its own children. */
+  .glitch-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    padding: 0 28px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 0;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .glitch-btn-yellow {
+    background: linear-gradient(45deg, transparent 5%, var(--color-signal-yellow) 5%);
+    color: var(--color-void);
+    box-shadow: 6px 0 0 var(--color-signal-cyan);
+  }
+
+  .glitch-btn-red {
+    background: linear-gradient(45deg, transparent 5%, var(--color-signal-red) 5%);
+    color: #fff;
+    box-shadow: 6px 0 0 var(--color-signal-cyan);
+  }
+
+  .glitch-btn::after {
+    --slice-0: inset(50% 50% 50% 50%);
+    --slice-1: inset(80% -6px 0 0);
+    --slice-2: inset(50% -6px 30% 0);
+    --slice-3: inset(10% -6px 85% 0);
+    --slice-4: inset(40% -6px 43% 0);
+    --slice-5: inset(80% -6px 5% 0);
+    content: attr(data-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    padding: 0 28px;
+    clip-path: var(--slice-0);
+    pointer-events: none;
+  }
+
+  .glitch-btn-yellow::after {
+    background: linear-gradient(45deg,
+        transparent 3%,
+        var(--color-signal-cyan) 3%,
+        var(--color-signal-cyan) 5%,
+        var(--color-signal-yellow) 3%);
+    color: var(--color-void);
+    text-shadow: -3px -3px 0 var(--color-signal-red), 3px 3px 0 var(--color-signal-cyan);
+  }
+
+  .glitch-btn-red::after {
+    background: linear-gradient(45deg,
+        transparent 3%,
+        var(--color-signal-cyan) 3%,
+        var(--color-signal-cyan) 5%,
+        var(--color-signal-red) 3%);
+    color: #fff;
+    text-shadow: -3px -3px 0 var(--color-signal-yellow), 3px 3px 0 var(--color-signal-cyan);
+  }
+
+  .glitch-btn:hover::after,
+  .glitch-btn:focus-visible::after {
+    animation: glitch-btn-cut 1s steps(2, end);
+  }
+
+  @keyframes glitch-btn-cut {
+    0% {
+      clip-path: var(--slice-1);
+      transform: translate(-20px, -10px);
+    }
+
+    10% {
+      clip-path: var(--slice-3);
+      transform: translate(10px, 10px);
+    }
+
+    20% {
+      clip-path: var(--slice-1);
+      transform: translate(-10px, 10px);
+    }
+
+    30% {
+      clip-path: var(--slice-3);
+      transform: translate(0px, 5px);
+    }
+
+    40% {
+      clip-path: var(--slice-2);
+      transform: translate(-5px, 0px);
+    }
+
+    50% {
+      clip-path: var(--slice-3);
+      transform: translate(5px, 0px);
+    }
+
+    60% {
+      clip-path: var(--slice-4);
+      transform: translate(5px, 10px);
+    }
+
+    70% {
+      clip-path: var(--slice-2);
+      transform: translate(-10px, 10px);
+    }
+
+    80% {
+      clip-path: var(--slice-5);
+      transform: translate(20px, -10px);
+    }
+
+    90% {
+      clip-path: var(--slice-1);
+      transform: translate(-10px, 0px);
+    }
+
+    100% {
+      clip-path: var(--slice-1);
+      transform: translate(0);
+    }
   }
 }

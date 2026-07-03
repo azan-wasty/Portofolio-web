@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-// stub
-
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollTrail } from "@/components/ui/ScrollTrail";
 import { SandevistanTrail } from "@/components/ui/SandevistanTrail";
 import { CyberGrid } from "@/components/ui/CyberGrid";
 import "./globals.css";
-
-
 
 // Signature wordmark face — used on major headings only (hero name, nav
 // logo, section titles). Not for body/UI text or copy with punctuation:
@@ -19,6 +15,23 @@ import "./globals.css";
 const cyberpunkSignature = localFont({
   src: "../assets/fonts/Cyberpunk.ttf",
   variable: "--font-cyberpunk",
+  display: "swap",
+});
+
+// Body/UI text.
+const blenderPro = localFont({
+  src: "../assets/fonts/BlenderPro-Book.ttf",
+  variable: "--font-blender-pro",
+  weight: "400",
+  display: "swap",
+});
+
+// Headings — everything using font-display (RotatableWheel, ProjectCard,
+// SectionHeading, etc).
+const blenderProBold = localFont({
+  src: "../assets/fonts/BlenderPro-Bold.ttf",
+  variable: "--font-blender-pro-bold",
+  weight: "700",
   display: "swap",
 });
 
@@ -36,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cyberpunkSignature.variable} h-full`}
+      className={`${cyberpunkSignature.variable} ${blenderPro.variable} ${blenderProBold.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-void text-text-primary antialiased">
         <CyberGrid />

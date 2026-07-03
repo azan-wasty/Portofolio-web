@@ -205,7 +205,7 @@ export function SandevistanTrail() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-50 mix-blend-multiply"
+      className="pointer-events-none fixed inset-0 z-50 mix-blend-screen"
     />
   );
 }

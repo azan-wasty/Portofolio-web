@@ -11,10 +11,20 @@
   --color-text-primary: #f2f2ea;
   --color-text-dim: #8f8f85;
 
+  /* Shared glitch slice shapes — used by both .glitch-btn (hover) and
+     .wheel-glitch (card-switch cut) so the two effects read as one
+     consistent technique instead of two different ones. */
+  --slice-0: inset(50% 50% 50% 50%);
+  --slice-1: inset(80% -6px 0 0);
+  --slice-2: inset(50% -6px 30% 0);
+  --slice-3: inset(10% -6px 85% 0);
+  --slice-4: inset(40% -6px 43% 0);
+  --slice-5: inset(80% -6px 5% 0);
+
 
   --font-signature: var(--font-cyberpunk);
   --font-mono: var(--font-blender-pro);
-  --font-mono: var(--font-blender-pro-bold);
+  --font-display: var(--font-blender-pro-bold);
 }
 
 @theme inline {
@@ -39,18 +49,6 @@ body {
   background: var(--color-void);
   color: var(--color-text-primary);
   font-family: var(--font-mono);
-}
-
-/* Space Mono and Orbitron both read thin at their default 400 weight —
-   bump the baseline so the whole site doesn't look underweight next to
-   the heavier Cyberpunk.ttf signature face. Anything that wants a
-   specific weight (font-mono, font-black, etc.) still overrides this. */
-.font-mono {
-  font-weight: 400;
-}
-
-.font-mono {
-  font-weight: 700;
 }
 
 ::selection {
@@ -169,52 +167,69 @@ body {
 }
 
 /* Glitch-cut burst — fired on the project wheel when switching cards.
-   Punchy clip-path jump-cuts + a quick RGB channel split via filter. */
+   Reuses the button glitch's slice choreography (--slice-N + the same
+   clip-path/translate rhythm as glitch-btn-cut) instead of the old
+   filter-based hue-rotate/saturate approach, so both "glitch" moments
+   on the site read as the same effect. Starts/ends fully visible since
+   this plays on the real card (not a hover-only ghost layer). */
 .wheel-glitch {
-  animation: wheel-glitch-cut 0.26s steps(2, jump-none) 1;
+  animation: wheel-glitch-cut 0.4s steps(2, jump-none) 1;
 }
 
 @keyframes wheel-glitch-cut {
   0% {
     clip-path: inset(0 0 0 0);
-    filter: none;
-    transform: translateX(0);
+    transform: translate(0, 0);
   }
 
-  15% {
-    clip-path: inset(10% 0 60% 0);
-    filter: hue-rotate(20deg) saturate(2);
-    transform: translateX(-6px);
+  10% {
+    clip-path: var(--slice-3);
+    transform: translate(10px, 10px);
+  }
+
+  20% {
+    clip-path: var(--slice-1);
+    transform: translate(-10px, 10px);
   }
 
   30% {
-    clip-path: inset(55% 0 5% 0);
-    filter: hue-rotate(-20deg) saturate(2);
-    transform: translateX(5px);
+    clip-path: var(--slice-3);
+    transform: translate(0px, 5px);
   }
 
-  45% {
-    clip-path: inset(20% 0 40% 0);
-    filter: contrast(1.4);
-    transform: translateX(-3px);
+  40% {
+    clip-path: var(--slice-2);
+    transform: translate(-5px, 0px);
+  }
+
+  50% {
+    clip-path: var(--slice-3);
+    transform: translate(5px, 0px);
   }
 
   60% {
-    clip-path: inset(70% 0 2% 0);
-    filter: hue-rotate(15deg);
-    transform: translateX(4px);
+    clip-path: var(--slice-4);
+    transform: translate(5px, 10px);
+  }
+
+  70% {
+    clip-path: var(--slice-2);
+    transform: translate(-10px, 10px);
   }
 
   80% {
-    clip-path: inset(5% 0 75% 0);
-    filter: none;
-    transform: translateX(-2px);
+    clip-path: var(--slice-5);
+    transform: translate(20px, -10px);
+  }
+
+  90% {
+    clip-path: var(--slice-1);
+    transform: translate(-10px, 0px);
   }
 
   100% {
     clip-path: inset(0 0 0 0);
-    filter: none;
-    transform: translateX(0);
+    transform: translate(0, 0);
   }
 }
 
@@ -421,6 +436,135 @@ body {
   }
 }
 
+/* Glitch button — adapted from a tested CodePen technique (hard diagonal
+   color-split background + offset box-shadow for a 3D sticker look, then
+   a hover-triggered clip-path slice animation on a duplicate ::after
+   text layer). Source used content:'RESUME_' hardcoded per button; here
+   content: attr(data-text) so any label works — NeonButton sets
+   data-text to its own children. */
+.glitch-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  padding: 0 28px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.glitch-btn-yellow {
+  background: linear-gradient(45deg, transparent 5%, var(--color-signal-yellow) 5%);
+  color: var(--color-void);
+  box-shadow: 6px 0 0 var(--color-signal-cyan);
+}
+
+.glitch-btn-red {
+  background: linear-gradient(45deg, transparent 5%, var(--color-signal-red) 5%);
+  color: #fff;
+  box-shadow: 6px 0 0 var(--color-signal-cyan);
+}
+
+.glitch-btn::after {
+  content: attr(data-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+  padding: 0 28px;
+  clip-path: var(--slice-0);
+  pointer-events: none;
+}
+
+.glitch-btn-yellow::after {
+  background: linear-gradient(45deg,
+      transparent 3%,
+      var(--color-signal-cyan) 3%,
+      var(--color-signal-cyan) 5%,
+      var(--color-signal-yellow) 3%);
+  color: var(--color-void);
+  text-shadow: -3px -3px 0 var(--color-signal-red), 3px 3px 0 var(--color-signal-cyan);
+}
+
+.glitch-btn-red::after {
+  background: linear-gradient(45deg,
+      transparent 3%,
+      var(--color-signal-cyan) 3%,
+      var(--color-signal-cyan) 5%,
+      var(--color-signal-red) 3%);
+  color: #fff;
+  text-shadow: -3px -3px 0 var(--color-signal-yellow), 3px 3px 0 var(--color-signal-cyan);
+}
+
+.glitch-btn:hover::after,
+.glitch-btn:focus-visible::after {
+  animation: glitch-btn-cut 1s steps(2, end);
+}
+
+@keyframes glitch-btn-cut {
+  0% {
+    clip-path: var(--slice-1);
+    transform: translate(-20px, -10px);
+  }
+
+  10% {
+    clip-path: var(--slice-3);
+    transform: translate(10px, 10px);
+  }
+
+  20% {
+    clip-path: var(--slice-1);
+    transform: translate(-10px, 10px);
+  }
+
+  30% {
+    clip-path: var(--slice-3);
+    transform: translate(0px, 5px);
+  }
+
+  40% {
+    clip-path: var(--slice-2);
+    transform: translate(-5px, 0px);
+  }
+
+  50% {
+    clip-path: var(--slice-3);
+    transform: translate(5px, 0px);
+  }
+
+  60% {
+    clip-path: var(--slice-4);
+    transform: translate(5px, 10px);
+  }
+
+  70% {
+    clip-path: var(--slice-2);
+    transform: translate(-10px, 10px);
+  }
+
+  80% {
+    clip-path: var(--slice-5);
+    transform: translate(20px, -10px);
+  }
+
+  90% {
+    clip-path: var(--slice-1);
+    transform: translate(-10px, 0px);
+  }
+
+  100% {
+    clip-path: var(--slice-1);
+    transform: translate(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
 
   .glitch::before,
@@ -461,138 +605,8 @@ body {
     content: none !important;
   }
 
-  /* Glitch button — adapted from a tested CodePen technique (hard diagonal
-   color-split background + offset box-shadow for a 3D sticker look, then
-   a hover-triggered clip-path slice animation on a duplicate ::after
-   text layer). Source used content:'RESUME_' hardcoded per button; here
-   content: attr(data-text) so any label works — NeonButton sets
-   data-text to its own children. */
-  .glitch-btn {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 52px;
-    padding: 0 28px;
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    border: 0;
-    cursor: pointer;
-    text-decoration: none;
-  }
-
-  .glitch-btn-yellow {
-    background: linear-gradient(45deg, transparent 5%, var(--color-signal-yellow) 5%);
-    color: var(--color-void);
-    box-shadow: 6px 0 0 var(--color-signal-cyan);
-  }
-
-  .glitch-btn-red {
-    background: linear-gradient(45deg, transparent 5%, var(--color-signal-red) 5%);
-    color: #fff;
-    box-shadow: 6px 0 0 var(--color-signal-cyan);
-  }
-
-  .glitch-btn::after {
-    --slice-0: inset(50% 50% 50% 50%);
-    --slice-1: inset(80% -6px 0 0);
-    --slice-2: inset(50% -6px 30% 0);
-    --slice-3: inset(10% -6px 85% 0);
-    --slice-4: inset(40% -6px 43% 0);
-    --slice-5: inset(80% -6px 5% 0);
-    content: attr(data-text);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    inset: 0;
-    padding: 0 28px;
-    clip-path: var(--slice-0);
-    pointer-events: none;
-  }
-
-  .glitch-btn-yellow::after {
-    background: linear-gradient(45deg,
-        transparent 3%,
-        var(--color-signal-cyan) 3%,
-        var(--color-signal-cyan) 5%,
-        var(--color-signal-yellow) 3%);
-    color: var(--color-void);
-    text-shadow: -3px -3px 0 var(--color-signal-red), 3px 3px 0 var(--color-signal-cyan);
-  }
-
-  .glitch-btn-red::after {
-    background: linear-gradient(45deg,
-        transparent 3%,
-        var(--color-signal-cyan) 3%,
-        var(--color-signal-cyan) 5%,
-        var(--color-signal-red) 3%);
-    color: #fff;
-    text-shadow: -3px -3px 0 var(--color-signal-yellow), 3px 3px 0 var(--color-signal-cyan);
-  }
-
   .glitch-btn:hover::after,
   .glitch-btn:focus-visible::after {
-    animation: glitch-btn-cut 1s steps(2, end);
-  }
-
-  @keyframes glitch-btn-cut {
-    0% {
-      clip-path: var(--slice-1);
-      transform: translate(-20px, -10px);
-    }
-
-    10% {
-      clip-path: var(--slice-3);
-      transform: translate(10px, 10px);
-    }
-
-    20% {
-      clip-path: var(--slice-1);
-      transform: translate(-10px, 10px);
-    }
-
-    30% {
-      clip-path: var(--slice-3);
-      transform: translate(0px, 5px);
-    }
-
-    40% {
-      clip-path: var(--slice-2);
-      transform: translate(-5px, 0px);
-    }
-
-    50% {
-      clip-path: var(--slice-3);
-      transform: translate(5px, 0px);
-    }
-
-    60% {
-      clip-path: var(--slice-4);
-      transform: translate(5px, 10px);
-    }
-
-    70% {
-      clip-path: var(--slice-2);
-      transform: translate(-10px, 10px);
-    }
-
-    80% {
-      clip-path: var(--slice-5);
-      transform: translate(20px, -10px);
-    }
-
-    90% {
-      clip-path: var(--slice-1);
-      transform: translate(-10px, 0px);
-    }
-
-    100% {
-      clip-path: var(--slice-1);
-      transform: translate(0);
-    }
+    animation: none;
   }
 }

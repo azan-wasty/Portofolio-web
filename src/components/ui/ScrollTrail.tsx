@@ -103,7 +103,7 @@ export function ScrollTrail() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-40 mix-blend-multiply"
+      className="pointer-events-none fixed inset-0 z-40 mix-blend-screen"
     />
   );
 }

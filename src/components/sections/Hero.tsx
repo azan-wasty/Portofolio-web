@@ -31,7 +31,7 @@ export function Hero() {
           <NeonButton href="#projects" variant="red">
             View Projects
           </NeonButton>
-          <NeonButton href="#contact" variant="cyan">
+          <NeonButton href="#contact" variant="yellow">
             Get In Touch
           </NeonButton>
         </div>

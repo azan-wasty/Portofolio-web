@@ -7,6 +7,12 @@ import { navLinks, profile } from "@/lib/data/profile";
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Helper function to dynamically change single-page hash targets to multi-page routes
+  const getCleanHref = (href: string) => {
+    if (href === "#home" || href === "/") return "/";
+    return href.startsWith("#") ? href.replace("#", "/") : href;
+  };
+
   return (
     /* TOP BAR: Background changed to Black (#000000) and border changed to Yellow (#fcee0a) */
     <header className="sticky top-0 z-50 border-b-2 border-[#fcee0a] bg-[#000000]">
@@ -26,21 +32,21 @@ export function Navbar() {
           MENU
         </button>
 
-        {/* Logo/Name Link: Text changed from black to yellow */}
+        {/* Logo/Name Link: Updated href from "#home" to "/" */}
         <Link
-          href="#home"
+          href="/"
           className="font-signature text-base tracking-[0.2em] text-[#fcee0a] hover:text-white transition-colors"
           onClick={() => setIsMenuOpen(false)}
         >
           {profile.name.toUpperCase()}
         </Link>
 
-        {/* Desktop Nav Links: Text changed from black to yellow */}
+        {/* Desktop Nav Links: Hrefs automatically converted to subpaths */}
         <ul className="hidden gap-8 font-mono text-xs uppercase tracking-wider text-[#fcee0a] sm:flex ml-auto">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
-                href={link.href}
+                href={getCleanHref(link.href)}
                 className="transition-colors hover:text-white relative py-1 group"
               >
                 {link.label}
@@ -83,11 +89,12 @@ export function Navbar() {
               </button>
             </div>
 
+            {/* Sidebar Drawer Navigation: Hrefs automatically converted to subpaths */}
             <nav className="game-menu-item flex flex-col">
               {navLinks.map((link, idx) => (
                 <Link
                   key={link.href}
-                  href={link.href}
+                  href={getCleanHref(link.href)}
                   onClick={() => setIsMenuOpen(false)}
                   className="group relative flex items-center gap-4 px-2 py-4 outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fcee0a]"
                 >

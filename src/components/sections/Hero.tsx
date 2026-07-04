@@ -28,10 +28,10 @@ export function Hero() {
         </p>
 
         <div className="mt-10 flex flex-wrap gap-4">
-          <NeonButton href="#projects" variant="red">
+          <NeonButton href="/projects" variant="red">
             View Projects
           </NeonButton>
-          <NeonButton href="#contact" variant="yellow">
+          <NeonButton href="/contact" variant="yellow">
             Get In Touch
           </NeonButton>
         </div>

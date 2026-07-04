@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { RotatableWheel } from "./RotatableWheel";
 import { projects } from "@/lib/data/projects";
-import type { Project } from "@/types";
+
 
 export function Projects() {
   const [activeProject, setActiveProject] = useState<Project>(projects[0]);
@@ -29,13 +29,6 @@ export function Projects() {
         {/* Opaque base first — only visible where no image exists yet */}
         <div className="absolute inset-0 bg-void-raised" />
 
-        {activeProject.image && (
-          <div
-            key={transitionKey}
-            className="glitch-bg absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${activeProject.image})` }}
-          />
-        )}
 
         {/* Translucent scrim on top so text stays legible over any image */}
         <div className="absolute inset-0 bg-black/65" />

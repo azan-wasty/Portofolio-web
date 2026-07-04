@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, TouchEvent } from "react";
 import { projects } from "@/lib/data/projects";
 import { SkillChip } from "@/components/ui/SkillChip";
 import { NeonButton } from "@/components/ui/NeonButton";
-import type { Project } from "@/types";
+
 
 interface RotatableWheelProps {
   onActiveProjectChange?: (project: Project) => void;
@@ -22,7 +22,9 @@ export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
 
   const totalItems = projects.length;
   const theta = 360 / totalItems;
-  const radius = Math.round(180 / Math.tan(Math.PI / totalItems));
+
+  // Scaled the radius outwards to handle the much wider chip sizes perfectly
+  const radius = Math.round(340 / Math.tan(Math.PI / totalItems));
 
   const triggerGlitch = () => {
     if (glitchTimeout.current) clearTimeout(glitchTimeout.current);
@@ -56,7 +58,7 @@ export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
   const handleMouseMove = (e: MouseEvent) => {
     if (!isDragging.current) return;
     const deltaX = e.clientX - startX.current;
-    const currentRot = startRotation.current + deltaX * 0.18;
+    const currentRot = startRotation.current + deltaX * 0.12; // Smoothed down drag sensitivity for large items
     setRotation(currentRot);
   };
 
@@ -83,7 +85,7 @@ export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
   const handleTouchMove = (e: TouchEvent) => {
     if (!isDragging.current) return;
     const deltaX = e.touches[0].clientX - startX.current;
-    const currentRot = startRotation.current + deltaX * 0.25;
+    const currentRot = startRotation.current + deltaX * 0.18;
     setRotation(currentRot);
   };
 
@@ -105,8 +107,6 @@ export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
 
   const activeProject = projects[activeIndex];
 
-  // Tell the parent (Projects.tsx) which project is active so it can drive
-  // the full-section background image. Fires on mount too.
   useEffect(() => {
     onActiveProjectChange?.(activeProject);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,10 +124,11 @@ export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center py-12 select-none">
-      <div className="pointer-events-none absolute h-[380px] w-[380px] rounded-full border border-dashed border-signal-red/20 flex items-center justify-center animate-spin [animation-duration:120s] z-0">
-        <div className="h-[340px] w-[340px] rounded-full border border-signal-yellow/15 flex items-center justify-center">
-          <div className="h-[280px] w-[280px] rounded-full border border-void-line" />
+    <div className="relative flex flex-col items-center justify-center py-6 select-none w-full">
+      {/* Extended background decorative rings out wider */}
+      <div className="pointer-events-none absolute h-[580px] w-[580px] rounded-full border border-dashed border-signal-red/10 flex items-center justify-center animate-spin [animation-duration:160s] z-0">
+        <div className="h-[500px] w-[500px] rounded-full border border-signal-yellow/5 flex items-center justify-center">
+          <div className="h-[400px] w-[400px] rounded-full border border-void-line/40" />
         </div>
       </div>
 
@@ -139,6 +140,7 @@ export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
         <span>SYSTEM: {isGlitching ? "GLITCH" : "RUNNING"}</span>
       </div>
 
+      {/* Expanded view container bounds: max-w-[850px] h-[440px] */}
       <div
         ref={containerRef}
         onWheel={handleWheel}
@@ -146,10 +148,11 @@ export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleMouseUp}
-        className="relative flex h-[300px] w-full max-w-[440px] cursor-grab items-center justify-center active:cursor-grabbing [perspective:1000px] z-10 overflow-hidden"
+        className="relative flex h-[440px] w-full max-w-[850px] cursor-grab items-center justify-center active:cursor-grabbing [perspective:1200px] z-10 overflow-hidden"
       >
+        {/* Massive Card Base Layout: w-[560px] h-[340px] */}
         <div
-          className="relative h-[220px] w-[300px] transition-transform duration-500 ease-out"
+          className="relative h-[340px] w-[560px] transition-transform duration-500 ease-out"
           style={{
             transformStyle: "preserve-3d",
             transform: `translateZ(-${radius}px) rotateY(${rotation}deg)`,
@@ -160,48 +163,48 @@ export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
             return (
               <div
                 key={project.id}
-                className={`absolute inset-0 overflow-hidden border shadow-2xl transition-all duration-300 backface-hidden ${isCurrent && isGlitching ? "wheel-glitch" : ""
-                  }`}
+                className={`absolute inset-0 transition-all duration-300 backface-hidden p-[2px] ${isCurrent && isGlitching ? "wheel-glitch" : ""}`}
                 style={{
                   transform: `rotateY(${i * theta}deg) translateZ(${radius}px)`,
-                  borderColor: isCurrent
-                    ? "var(--color-signal-yellow)"
-                    : "var(--color-void-line)",
-                  opacity: isCurrent ? 1 : 0.35,
-                  boxShadow: isCurrent
-                    ? "0 0 15px rgba(252, 238, 10, 0.15)"
-                    : "none",
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03))",
+                  opacity: isCurrent ? 1 : 0.2, // Drop inactive cards further into the shadows
+                  backgroundColor: isCurrent ? "var(--color-signal-yellow)" : "var(--color-void-line)",
+                  /* Expanded the clip corner cut size to 35px to match the scale */
+                  clipPath: "polygon(35px 0, 100% 0, 100% calc(100% - 35px), calc(100% - 35px) 100%, 0 100%, 0 35px)",
+                  filter: isCurrent ? "drop-shadow(0px 0px 20px rgba(252, 238, 10, 0.35))" : "none",
                 }}
               >
-                <div className="relative z-10 flex h-full flex-col justify-between border border-white/15 p-5">
-                  <div>
+                {/* The Inner Image Layer */}
+                <div
+                  className="relative h-full w-full bg-void-raised overflow-hidden"
+                  style={{
+                    clipPath: "polygon(34px 0, 100% 0, 100% calc(100% - 34px), calc(100% - 34px) 100%, 0 100%, 0 34px)",
+                    backgroundImage: project.image ? `url(${project.image})` : "none",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                >
+                  {/* Subtle clean cinematic darken layer */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/50" />
+
+                  {/* Internal layout scales cleanly inside the large card frame */}
+                  <div className="relative z-10 flex h-full flex-col justify-between p-8">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-signal-red">
-                        ID-{project.id.slice(0, 4).toUpperCase()}
+                      <span className="font-mono text-xs text-signal-yellow bg-black/70 px-3 py-1 border border-signal-yellow/30 tracking-widest">
+                        NODE // {project.id.slice(0, 4).toUpperCase()}
                       </span>
-                      <span className="font-mono text-[10px] text-white/50">
-                        0{i + 1}
+                      <span className="font-mono text-sm font-bold text-white/50 bg-black/60 px-2 py-0.5">
+                        [ 0{i + 1} ]
                       </span>
                     </div>
-                    <h3 className="font-display mt-2 text-md tracking-wider text-white uppercase truncate [text-shadow:0_1px_4px_rgba(0,0,0,0.6)]">
-                      {project.title}
-                    </h3>
-                    <p className="mt-1 font-mono text-[10px] text-signal-yellow line-clamp-2 leading-relaxed">
-                      {project.tagline}
-                    </p>
-                  </div>
 
-                  <div className="flex flex-wrap gap-1">
-                    {project.stack.slice(0, 3).map((tech) => (
-                      <span
-                        key={tech}
-                        className="border border-white/25 bg-black/30 px-1.5 py-0.5 font-mono text-[9px] text-white/70"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                    <div className="max-w-md">
+                      <h3 className="font-display text-2xl tracking-wide text-white uppercase [text-shadow:0_3px_6px_rgba(0,0,0,0.9)]">
+                        {project.title}
+                      </h3>
+                      <p className="mt-2 font-mono text-xs text-signal-yellow uppercase tracking-wider bg-black/60 px-2 py-1 inline-block border-l-2 border-signal-yellow">
+                        {project.tagline}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -210,81 +213,83 @@ export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
         </div>
       </div>
 
-      <div className="mt-6 flex items-center gap-6 z-10">
+      {/* Wheel Navigation Controls */}
+      <div className="mt-4 flex items-center gap-6 z-10">
         <button
           onClick={handlePrev}
-          className="flex h-10 w-10 items-center justify-center border border-void-line bg-void-raised text-signal-yellow hover:border-signal-yellow hover:text-signal-yellow font-mono text-sm active:bg-void"
+          className="flex h-10 w-10 items-center justify-center bg-void-raised text-signal-yellow font-mono text-sm active:bg-void transition-colors"
+          style={{ clipPath: "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)", backgroundColor: "var(--color-void-line)" }}
           aria-label="Previous Project"
         >
-          &lt;
+          <span className="flex h-[36px] w-[36px] items-center justify-center bg-void-raised hover:bg-void" style={{ clipPath: "polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px)" }}>
+            &lt;
+          </span>
         </button>
 
-        <div className="flex h-1 w-32 bg-void-line relative">
+        <div className="flex h-1 w-48 bg-void-line relative overflow-hidden" style={{ clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)" }}>
           <div
             className="h-full bg-signal-yellow transition-all duration-300"
-            style={{
-              width: `${((activeIndex + 1) / totalItems) * 100}%`,
-            }}
+            style={{ width: `${((activeIndex + 1) / totalItems) * 100}%` }}
           />
         </div>
 
         <button
           onClick={handleNext}
-          className="flex h-10 w-10 items-center justify-center border border-void-line bg-void-raised text-signal-yellow hover:border-signal-yellow hover:text-signal-yellow font-mono text-sm active:bg-void"
+          className="flex h-10 w-10 items-center justify-center bg-void-raised text-signal-yellow font-mono text-sm active:bg-void transition-colors"
+          style={{ clipPath: "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)", backgroundColor: "var(--color-void-line)" }}
           aria-label="Next Project"
         >
-          &gt;
+          <span className="flex h-[36px] w-[36px] items-center justify-center bg-void-raised hover:bg-void" style={{ clipPath: "polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px)" }}>
+            &gt;
+          </span>
         </button>
       </div>
 
-      <div
-        className={`mt-8 w-full max-w-2xl self-start border border-signal-yellow/20 bg-void-raised/95 p-6 relative z-10 transition-all duration-300 ${isGlitching ? "wheel-glitch" : ""
-          }`}
-      >
-        <div className="absolute left-0 top-0 h-1 w-12 bg-signal-yellow" />
-        <div className="absolute right-0 bottom-0 h-1 w-12 bg-signal-red" />
+      {/* Details Box below the wheel */}
+      <div className={`mt-8 w-full max-w-2xl self-center bg-void-raised/95 p-[1px] relative z-10 transition-all duration-300 ${isGlitching ? "wheel-glitch" : ""}`} style={{ backgroundColor: "var(--color-signal-yellow)", clipPath: "polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px)" }}>
+        <div className="h-full w-full bg-void-raised p-6" style={{ clipPath: "polygon(29px 0, 100% 0, 100% calc(100% - 29px), calc(100% - 29px) 100%, 0 100%, 0 29px)" }}>
+          <header className="mb-4">
+            <div className="flex items-center gap-3">
+              <h4 className="font-display text-xl tracking-wider text-signal-yellow uppercase">
+                {activeProject.title}
+              </h4>
+              <span className="font-mono text-xs text-signal-red bg-signal-red/10 border border-signal-red/20 px-2 py-0.5">
+                ACTIVE NODE
+              </span>
+            </div>
+            <p className="mt-1 font-mono text-xs text-signal-yellow/70">
+              {activeProject.tagline}
+            </p>
+          </header>
 
-        <header className="mb-4">
-          <div className="flex items-center gap-3">
-            <h4 className="font-display text-xl tracking-wider text-signal-yellow uppercase">
-              {activeProject.title}
-            </h4>
-            <span className="font-mono text-xs text-signal-red bg-signal-red/10 border border-signal-red/20 px-2 py-0.5">
-              ACTIVE NODE
-            </span>
-          </div>
-          <p className="mt-1 font-mono text-xs text-signal-yellow/70">
-            {activeProject.tagline}
+          <p className="mb-4 font-mono text-sm leading-relaxed text-signal-yellow/80">
+            {activeProject.description}
           </p>
-        </header>
 
-        <p className="mb-4 font-mono text-sm leading-relaxed text-signal-yellow/80">
-          {activeProject.description}
-        </p>
+          <h5 className="font-display text-xs uppercase tracking-widest text-signal-red mb-2">
+            Project Highlights
+          </h5>
+          <ul className="mb-5 space-y-1.5 font-mono text-xs text-signal-yellow/80">
+            {activeProject.highlights.map((highlight) => (
+              <li key={highlight} className="flex gap-2">
+                <span className="text-signal-yellow">›</span>
+                {highlight}
+              </li>
+            ))}
+          </ul>
 
-        <h5 className="font-display text-xs uppercase tracking-widest text-signal-red mb-2">
-          Project Highlights
-        </h5>
-        <ul className="mb-5 space-y-1.5 font-mono text-xs text-signal-yellow/80">
-          {activeProject.highlights.map((highlight) => (
-            <li key={highlight} className="flex gap-2">
-              <span className="text-signal-yellow">›</span>
-              {highlight}
-            </li>
-          ))}
-        </ul>
+          <div className="mb-6 flex flex-wrap gap-2">
+            {activeProject.stack.map((tech) => (
+              <SkillChip key={tech} label={tech} />
+            ))}
+          </div>
 
-        <div className="mb-6 flex flex-wrap gap-2">
-          {activeProject.stack.map((tech) => (
-            <SkillChip key={tech} label={tech} />
-          ))}
+          {activeProject.repoUrl && (
+            <NeonButton href={activeProject.repoUrl} variant="yellow" external>
+              INITIALIZE REPO CONNECTION
+            </NeonButton>
+          )}
         </div>
-
-        {activeProject.repoUrl && (
-          <NeonButton href={activeProject.repoUrl} variant="yellow" external>
-            INITIALIZE REPO CONNECTION
-          </NeonButton>
-        )}
       </div>
     </div>
   );

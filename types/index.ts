@@ -26,8 +26,8 @@ export interface NavLink {
 
 export interface SocialLink {
   label: string;
-  href?: string;
-  icon: "github" | "linkedin" | "mail" | "external";
+  href: string;
+  icon: "github" | "linkedin" | "mail" | "instagram" | "external";
 }
 
 export interface ContactChannel {

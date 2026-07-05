@@ -41,6 +41,7 @@ export const contactChannels: ContactChannel[] = [
     {
         label: "Discord",
         value: "citrusmongus",
+        href: "",
     },
 
 ];

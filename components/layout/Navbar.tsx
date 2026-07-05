@@ -16,7 +16,7 @@ export function Navbar() {
     };
 
     return (
-        <header className="sticky top-0 z-50 border-b-2 border-[#fcee0a] bg-[#000000]">
+        <header className="sticky top-0 z-50 border-b-2 border-[#fcee0a] bg-[#000000]/70">
             {/* 
               Changed from max-w-6xl to w-full to allow edge-to-edge layout.
               Increased side padding slightly on larger screens (sm:px-6).

@@ -12,8 +12,8 @@ export default function HomePage() {
       */}
       <div id="home" className="scroll-mt-20"><Hero /></div>
       <div id="about" className="scroll-mt-20"><About /></div>
-      <div id="projects" className="scroll-mt-20"><Projects /></div>
       <div id="skills" className="scroll-mt-20"><Skills /></div>
+      <div id="projects" className="scroll-mt-20"><Projects /></div>
       <div id="contact" className="scroll-mt-20"><Contact /></div>
     </main>
   );

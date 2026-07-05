@@ -32,7 +32,7 @@ export function Projects() {
       <CyberSocials />
       <div className="mx-auto max-w-6xl relative z-10 text-text-dim text-lg">
         <ScrollReveal>
-          <SectionHeading index="03" title="Projects" subtitle="Interactive core" />
+          <SectionHeading index="04" title="Projects" subtitle="Interactive core" />
           <div className="mt-8">
             <RotatableWheel onActiveProjectChange={handleActiveProjectChange} />
           </div>

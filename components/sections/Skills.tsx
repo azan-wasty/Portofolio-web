@@ -9,7 +9,7 @@ export function Skills() {
       <CyberSocials />
       <div className="mx-auto max-w-6xl">
         <ScrollReveal>
-          <SectionHeading index="02" title="Skills" subtitle="Loaded Modules" />
+          <SectionHeading index="03" title="Skills" subtitle="Loaded Modules" />
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {skillGroups.map((group, index) => (

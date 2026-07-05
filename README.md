@@ -1,6 +1,6 @@
 # Azan Wasty — Portfolio
 
-A personal portfolio site inspired by the visual language of *Cyberpunk: Edgerunners* — void-black backgrounds, hazard yellow/red/cyan accents, glitch typography, and a HUD-style interaction layer over otherwise ordinary content sections.
+A personal portfolio site inspired by the visual language of *Cyberpunk: 2077* — void-black backgrounds, hazard yellow/red/cyan accents, glitch typography, and a HUD-style interaction layer over otherwise ordinary content sections.
 
 **Live site:** [azan-2077-portfolio.netlify.app](https://azan-2077-portfolio.netlify.app/)
 

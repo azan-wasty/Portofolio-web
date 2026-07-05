@@ -1,32 +1,3 @@
 [build]
-  command = "npm run build"
-  publish = ".next"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
-[functions]
-  directory = ".netlify/functions-serve"
-
-[functions_templates]
-  use_x_forwarded_for = true
-
-[build.environment]
-  NODE_VERSION = "22.x"
-  PNPM_VERSION = "9.x"
-
-[context]
-  production = {
-    functions_directory = ".netlify/functions-serve"
-  }
-
-[edge_functions]
-  functions = [
-    { name = "not-found-edge", path = ".netlify/edge-functions/not-found-edge/index.mjs" }
-  ]
-
-[headers]
-  "/ 404" = {
-    Cache-Control = "public, max-age=0, must-revalidate"
-  }
-
+publish = "dist"     # change to your build output folder (e.g., "build", "public")
+command = "npm run build"  # change to your build command

@@ -1,0 +1,82 @@
+import type { Project } from "@/types";
+
+export const projects: Project[] = [
+    {
+        id: "loghorizon",
+        title: "LogHorizon",
+        tagline: "Full-stack media discovery & community tracking platform",
+        description:
+            "A full-stack platform for tracking anime, manga, and TV/movie taste across a community. Ingests live metadata from multiple sources and scores recommendations with a weighted engine.",
+        stack: ["React", "Express", "Prisma", "PostgreSQL", "Supabase", "Three.js"],
+        highlights: [
+            "Weighted recommendation engine (genre, mood, theme scoring)",
+            "Multi-source ingestion pipeline with dedup + smart-skip cursors",
+            "15-achievement gamification system with role-based admin approval",
+            "WebGL/GLSL shader backgrounds and face-detection features",
+        ],
+        repoUrl: "https://github.com/azan-wasty/LogHorizon",
+        featured: true,
+        image: "/projects/image.png",
+    },
+    {
+        id: "nightcityco",
+        title: "Cyberpunk themed Portfolio",
+        tagline: "A portfolio website inspired from Cyberpunk 2077.",
+        description:
+            "This portfolio website is a personal project that features a unique and immersive user experience. The website is designed to showcase my skills, projects, and achievements in a visually appealing and interactive manner. The website is built with modern web technologies and follows the latest design trends.",
+        stack: ["Next.js", "React", "Tailwind CSS", "TypeScript"],
+        highlights: [
+            "Custom sandevitsan mouse tracking afterimage and glitch animations",
+            "Glitch transitions between sections",
+            "Game Esque side bar navigation menu",
+        ],
+        featured: true,
+        image: "/projects/cyberpunk-web.png",
+    },
+    {
+        id: "fumble",
+        title: "Fumble",
+        tagline: "Sports facility booking & management system",
+        description:
+            "A booking platform for sports facilities with authenticated scheduling, conflict detection, and role-based access for admins and members.",
+        stack: ["MSSQL", "JWT", "Node"],
+        highlights: [
+            "Booking conflict detection at the database layer",
+            "JWT-based auth with role-based access control",
+        ],
+        repoUrl: "https://github.com/azan-wasty/Fumble",
+        featured: false,
+        image: "/projects/fumble.png",
+    },
+    {
+        id: "parkinsons-ml",
+        title: "Parkinson's Detection Pipeline",
+        tagline: "Acoustic-feature ML pipeline for early screening",
+        description:
+            "A machine learning pipeline trained on the UCI Parkinson's dataset, using voice acoustic features to screen for early indicators. Tuned for recall given the medical screening context.",
+        stack: ["Python", "scikit-learn", "Streamlit"],
+        highlights: [
+            "Random Forest + Logistic Regression with GridSearchCV tuning",
+            "~95%+ ROC-AUC on held-out data",
+            "Deployed as an interactive Streamlit app",
+        ],
+        repoUrl: "https://github.com/azan-wasty/Parkinsons-Diagnosis-at-Initial-Stages-using-Vocal-Data",
+        featured: true,
+    },
+    {
+        id: "pacman-cpp",
+        title: "Pac-Man",
+        tagline: "C++ / SFML arcade clone with a real OOP architecture",
+        description:
+            "A from-scratch Pac-Man clone built to demonstrate solid object-oriented design: abstract base classes, runtime polymorphism, and a proper finite state machine, not just a rendering loop.",
+        stack: ["C++", "SFML"],
+        highlights: [
+            "8 Custom Ghosts with custom made sprites",
+            "Custom Made Map and design ",
+            "Background Music and Sound Effects",
+        ],
+        featured: false,
+        repoUrl: "https://github.com/azan-wasty/PacmanGame",
+        image: "/projects/pacman.png",
+    },
+];

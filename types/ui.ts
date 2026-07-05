@@ -24,6 +24,7 @@ export interface Particle {
 
 export interface SkillChipProps {
     label: string;
+    accent?: "yellow" | "red" | "cyan";
 }
 
 export interface NeonButtonProps {

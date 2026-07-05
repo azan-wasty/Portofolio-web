@@ -11,7 +11,7 @@ export default function Contact() {
 
       <div className="mx-auto max-w-6xl text-display">
         <ScrollReveal>
-          <SectionHeading index="04" title="Contact" subtitle="Open a channel" />
+          <SectionHeading index="05" title="Contact" subtitle="Open a channel" />
 
           <p className="mb-8 max-w-xl leading-relaxed text-text-dim text-lg">
             Reach out about internships, collaborations, or anything you&apos;d

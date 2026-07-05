@@ -9,18 +9,18 @@ interface ProjectDetailsBoxProps {
 
 export function ProjectDetailsBox({ activeProject, isGlitching }: ProjectDetailsBoxProps) {
   return (
-    <div className={`mt-8 w-full max-w-2xl self-center bg-void-raised/95 p-[1px] relative z-10 transition-all duration-300 ${isGlitching ? "wheel-glitch" : ""}`} style={{ backgroundColor: "var(--color-signal-yellow)", clipPath: "polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px)" }}>
-      <div className="h-full w-full bg-void-raised p-6" style={{ clipPath: "polygon(29px 0, 100% 0, 100% calc(100% - 29px), calc(100% - 29px) 100%, 0 100%, 0 29px)" }}>
+    <div className={`mt-8 w-full max-w-2xl self-center bg-void-raised/95 p-[1px] relative z-10 transition-all duration-300 ${isGlitching ? "wheel-glitch" : ""}`} style={{ backgroundColor: "var(--color-signal-yellow)", clipPath: "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)" }}>
+      <div className="h-full w-full bg-void-raised p-4 sm:p-6" style={{ clipPath: "polygon(19px 0, 100% 0, 100% calc(100% - 19px), calc(100% - 19px) 100%, 0 100%, 0 19px)" }}>
         <header className="mb-4">
-          <div className="flex items-center gap-3">
-            <h4 className="font-signature text-2xl tracking-wider text-signal-yellow uppercase md:text-3xl">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <h4 className="font-signature text-xl tracking-wider text-signal-yellow uppercase break-words sm:text-2xl md:text-3xl">
               {activeProject.title}
             </h4>
-            <span className="font-mono text-lg text-signal-red bg-signal-red/10 border border-signal-red/20 px-2 py-0.5">
+            <span className="font-mono text-sm text-signal-red bg-signal-red/10 border border-signal-red/20 px-2 py-0.5 sm:text-lg">
               ACTIVE
             </span>
           </div>
-          <p className="mt-2 font-mono text-base md:text-lg text-signal-yellow/90">
+          <p className="mt-2 font-mono text-sm sm:text-base md:text-lg text-signal-yellow/90">
             {activeProject.tagline}
           </p>
         </header>

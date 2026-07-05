@@ -26,12 +26,11 @@ export function Hero() {
         <p className="mt-6 max-w-xl text-base leading-relaxed text-text-dim/90 sm:text-lg md:text-xl">
           {profile.summary}
         </p>
-
         <div className="mt-6 flex flex-wrap gap-4 font-display sm:mt-10">
-          <NeonButton href="/projects" variant="red">
+          <NeonButton href="#projects" variant="red">
             Projects
           </NeonButton>
-          <NeonButton href="/contact" variant="yellow">
+          <NeonButton href="#contact" variant="yellow">
             Contact
           </NeonButton>
         </div>

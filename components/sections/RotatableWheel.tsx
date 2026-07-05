@@ -34,18 +34,29 @@ export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
   const BASE_CARD_HEIGHT = 340;
   const BASE_WHEEL_HEIGHT = 440;
   const RADIUS_RATIO = 340 / (BASE_CARD_WIDTH / 2);
-  const MIN_CARD_WIDTH = 260;
+  const MIN_CARD_WIDTH = 200;
+  const GUTTER = 16;
 
   const [containerWidth, setContainerWidth] = useState(BASE_CARD_WIDTH);
 
   const cardWidth = Math.max(
     MIN_CARD_WIDTH,
-    Math.min(BASE_CARD_WIDTH, containerWidth - 24)
+    Math.min(BASE_CARD_WIDTH, containerWidth - GUTTER)
   );
   const cardHeight = cardWidth * (BASE_CARD_HEIGHT / BASE_CARD_WIDTH);
   const wheelHeight = cardHeight * (BASE_WHEEL_HEIGHT / BASE_CARD_HEIGHT);
   const radius = Math.round(
     ((cardWidth / 2) * RADIUS_RATIO) / Math.tan(Math.PI / totalItems)
+  );
+
+  // Corner cut and inner padding scale down with the card so small phone
+  // screens don't get the desktop-sized 35px notch/padding crammed into a
+  // ~200px card (which was clipping the title/badge on mobile).
+  const cutSize = Math.round(
+    Math.max(16, Math.min(35, cardWidth * 0.08))
+  );
+  const cardPadding = Math.round(
+    Math.max(12, Math.min(32, cardWidth * 0.06))
   );
 
   useEffect(() => {
@@ -112,29 +123,32 @@ export function RotatableWheel({ onActiveProjectChange }: RotatableWheelProps) {
                   transform: `rotateY(${i * theta}deg) translateZ(${radius}px)`,
                   opacity: isCurrent ? 1 : 0.2,
                   backgroundColor: isCurrent ? "var(--color-signal-yellow)" : "var(--color-void-line)",
-                  clipPath: "polygon(35px 0, 100% 0, 100% calc(100% - 35px), calc(100% - 35px) 100%, 0 100%, 0 35px)",
+                  clipPath: `polygon(${cutSize}px 0, 100% 0, 100% calc(100% - ${cutSize}px), calc(100% - ${cutSize}px) 100%, 0 100%, 0 ${cutSize}px)`,
                   filter: isCurrent ? "drop-shadow(0px 0px 20px rgba(252, 238, 10, 0.35))" : "none",
                 }}
               >
                 <div
                   className="relative h-full w-full bg-void-raised overflow-hidden"
                   style={{
-                    clipPath: "polygon(34px 0, 100% 0, 100% calc(100% - 34px), calc(100% - 34px) 100%, 0 100%, 0 34px)",
+                    clipPath: `polygon(${cutSize - 1}px 0, 100% 0, 100% calc(100% - ${cutSize - 1}px), calc(100% - ${cutSize - 1}px) 100%, 0 100%, 0 ${cutSize - 1}px)`,
                     backgroundImage: project.image ? `url(${project.image})` : "none",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
                 >
-                  <div className="relative z-10 flex h-full flex-col justify-between p-8">
+                  <div
+                    className="relative z-10 flex h-full flex-col justify-between"
+                    style={{ padding: cardPadding }}
+                  >
                     <div className="flex items-center justify-between">
 
-                      <span className="font-mono text-sm font-bold text-white/50 bg-black/60 px-2 py-0.5">
+                      <span className="font-mono text-xs font-bold text-white/50 bg-black/60 px-2 py-0.5 sm:text-sm">
                         [ 0{i + 1} ]
                       </span>
                     </div>
 
-                    <div className="max-w-sm">
-                      <h3 className="mt-2 font-display text-base text-signal-yellow uppercase tracking-wider bg-black/60 px-2 py-1 inline-block border-l-2 border-signal-yellow">
+                    <div className="max-w-full">
+                      <h3 className="mt-2 font-display text-sm text-signal-yellow uppercase tracking-wider bg-black/60 px-2 py-1 inline-block border-l-2 border-signal-yellow line-clamp-2 sm:text-base">
                         {project.title}
                       </h3>
 

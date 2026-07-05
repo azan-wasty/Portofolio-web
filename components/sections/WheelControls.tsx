@@ -7,10 +7,10 @@ interface WheelControlsProps {
 
 export function WheelControls({ activeIndex, totalItems, handlePrev, handleNext }: WheelControlsProps) {
   return (
-    <div className="mt-4 flex items-center gap-6 z-10">
+    <div className="mt-4 flex items-center gap-3 z-10 sm:gap-6">
       <button
         onClick={handlePrev}
-        className="flex h-10 w-10 items-center justify-center bg-void-raised text-signal-yellow font-mono text-lg active:bg-void transition-colors"
+        className="flex h-10 w-10 shrink-0 items-center justify-center bg-void-raised text-signal-yellow font-mono text-lg active:bg-void transition-colors"
         style={{ clipPath: "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)", backgroundColor: "var(--color-void-line)" }}
         aria-label="Previous Project"
       >
@@ -19,7 +19,7 @@ export function WheelControls({ activeIndex, totalItems, handlePrev, handleNext 
         </span>
       </button>
 
-      <div className="flex h-1 w-48 bg-void-line relative overflow-hidden" style={{ clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)" }}>
+      <div className="flex h-1 w-28 bg-void-line relative overflow-hidden sm:w-48" style={{ clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)" }}>
         <div
           className="h-full bg-signal-yellow transition-all duration-300"
           style={{ width: `${((activeIndex + 1) / totalItems) * 100}%` }}
@@ -28,7 +28,7 @@ export function WheelControls({ activeIndex, totalItems, handlePrev, handleNext 
 
       <button
         onClick={handleNext}
-        className="flex h-10 w-10 items-center justify-center bg-void-raised text-signal-yellow font-mono text-lg active:bg-void transition-colors"
+        className="flex h-10 w-10 shrink-0 items-center justify-center bg-void-raised text-signal-yellow font-mono text-lg active:bg-void transition-colors"
         style={{ clipPath: "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)", backgroundColor: "var(--color-void-line)" }}
         aria-label="Next Project"
       >

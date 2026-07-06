@@ -22,7 +22,7 @@ export const navLinks: NavLink[] = [
 export const socialLinks: SocialLink[] = [
     { label: "GitHub", href: "https://github.com/azan-wasty", icon: "github" },
     { label: "Email", href: "mailto:wastyazan@gmail.com", icon: "mail" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/azan-wasty", icon: "linkedin" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/azan-wasty-8b831a343?utm_source=share_via&utm_content=profile&utm_medium=member_android", icon: "linkedin" },
     { label: "Instagram", href: "https://www.instagram.com/azansmh", icon: "instagram" },
 
 ];

@@ -7,16 +7,13 @@ import NeonButton from "@/components/ui/NeonButton";
 export function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // Inside Navbar.tsx
     const getCleanHref = (href: string) => {
-        // If it's a home link, scroll to top
-        if (href === "#home" || href === "/") return "/#home";
-        // Keep it as a hash link so it scrolls to the section on the same page
-        return href;
+        if (href === "#home" || href === "/") return "/";
+        return href.startsWith("#") ? href.replace("#", "/") : href;
     };
 
     return (
-        <header className="sticky top-0 z-50 border-b-2 border-[#fcee0a] bg-[#000000]/70">
+        <header className="sticky top-0 z-50 border-b-2 border-[#fcee0a] bg-[#000000]">
             {/* 
               Changed from max-w-6xl to w-full to allow edge-to-edge layout.
               Increased side padding slightly on larger screens (sm:px-6).

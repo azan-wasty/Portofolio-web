@@ -27,7 +27,6 @@ export const projects: Project[] = [
         stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
         highlights: [
             "RotatableWheel: a 3D cylinder carousel for Projects with CSS glitch-cut transitions",
-            "CyberGrid: canvas-based ambient background with 140 floating, repositioning rectangles",
             "NeonButton with a clip-path slice glitch hover animation, supporting both Link and onClick modes",
             "Self-hosted Cyberpunk.ttf headings + Blender Pro body/display via next/font/local, fully data-driven from src/lib/data/",
         ],

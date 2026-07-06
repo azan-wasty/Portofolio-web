@@ -1,22 +1,23 @@
 "use client";
-import { motion, AnimatePresence } from "framer-motion";
-import { usePathname } from "next/navigation";
+
+import { useEffect, useState } from "react";
 
 export default function Template({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
+  const [isGlitching, setIsGlitching] = useState(true);
+
+  useEffect(() => {
+    // Re-trigger glitch animation on route change
+    setIsGlitching(true);
+    const timer = setTimeout(() => {
+      setIsGlitching(false);
+    }, 500); // Matches the 0.5s CSS animation duration
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    // Only animate if the full route changes. 
-    // Hash links will not trigger the exit/enter cycle if wrapped correctly.
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={pathname} // Animation only triggers on route change
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <div className={isGlitching ? "page-glitch-enter" : ""}>
+      {children}
+    </div>
   );
 }

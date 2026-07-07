@@ -65,6 +65,8 @@ export const projects: Project[] = [
         ],
         repoUrl: "https://github.com/azan-wasty/Parkinsons-Diagnosis-at-Initial-Stages-using-Vocal-Data",
         featured: true,
+        image: "/projects/learning_curve_Logistic_Regression.png",
+
     },
     {
         id: "pacman-cpp",

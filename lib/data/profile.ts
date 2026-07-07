@@ -6,9 +6,9 @@ export const profile = {
     University: "FAST NUCES",
     location: "Lahore, Pakistan",
     summary:
-        "Second-year Data Science student and full-stack developer. Currently interning at Oriental Nippon Develpoment.",
+        "Second-year Data Science student and full-stack developer. Currently interning at Oriental Nippon Development.",
     longBio:
-        "I build full-stack products end to end and have deployed accurate ML models. Most of my personal work centers on ML , Manangement Systems , Community Driven Apps. I try to build stuff that people and most importantly I'd like to use.",
+        "I build full-stack products end to end and have deployed accurate ML models. Most of my personal work centers on ML , Management Systems , Community Driven Apps. I try to build stuff that people and most importantly I'd like to use myself.",
 };
 
 export const navLinks: NavLink[] = [

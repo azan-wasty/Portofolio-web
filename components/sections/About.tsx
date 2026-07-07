@@ -27,7 +27,7 @@ export function About() {
               </div>
               <div>
                 <dt className="text-signal-yellow">Status</dt>
-                <dd className="text-text-dim">Currently interning — Oriental Nippon Develpoment </dd>
+                <dd className="text-text-dim">Currently interning — Oriental Nippon Development </dd>
               </div>
             </dl>
           </div>

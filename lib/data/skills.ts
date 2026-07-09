@@ -16,7 +16,7 @@ export const skillGroups: SkillGroup[] = [
     {
         id: "backend",
         label: "Backend",
-        skills: ["Node.js", "Express", "Prisma", "REST APIs"],
+        skills: ["Node.js", "Express", "Prisma", "REST APIs", "Fast APIS", "SQLAlchemy", "Alembic"],
         accent: "red",
     },
     {
@@ -28,7 +28,7 @@ export const skillGroups: SkillGroup[] = [
     {
         id: "tools",
         label: "Tools & Systems",
-        skills: ["Git", "SFML", "Vercel", "Render", "Railway", "Netlify", "Supabase"],
+        skills: ["Git", "SFML", "Vercel", "Render", "Railway", "Netlify", "Supabase", "Docker"],
         accent: "cyan",
     },
     {

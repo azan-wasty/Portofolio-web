@@ -19,6 +19,24 @@ export const projects: Project[] = [
         image: "/projects/image.png",
     },
     {
+    id: "medbay",
+    title: "MedBAY",
+    tagline: "Verified B2B medical equipment marketplace on an Odoo 17 backend",
+    description:
+        "A B2B marketplace for sourcing medical equipment, pairing a custom Odoo 17 (Community Edition) addon — medical_marketplace — as the backend ERP with a Next.js 14 storefront, fully orchestrated via Docker Compose. Verified buyers browse a supplier catalog, submit RFQs, track orders end-to-end, leave reviews, and request returns, while admins verify organizations, quote RFQs, and manage carriers.",
+    stack: ["Next.js 14", "TypeScript", "Odoo 17", "Python", "PostgreSQL", "Docker Compose", "Tailwind CSS", "Radix UI"],
+    highlights: [
+        "Custom Odoo addon (medical_marketplace) exposing catalog, RFQ, order, and returns logic via JSON endpoints",
+        "Full RFQ flow: cart → submit → admin quotes → buyer approves → confirmed order",
+        "Buyer-facing order stepper across 6 stages, with carrier assignment and shipment/invoice tracking",
+        "Admin console spanning company verification, return approvals, and order/carrier management",
+        "Enterprise-grade B2B storefront redesign — teal/azure/ink token system, animated EKG 'pulse line' motif, WCAG-conscious and motion-safe",
+    ],
+    repoUrl: "https://github.com/azan-wasty/MedBAY",
+    featured: true,
+    image: "/projects/medbay.png",
+},
+    {
         id: "nightcityco",
         title: "Cyberpunk themed Portfolio",
         tagline: "Cyberpunk Edgerunners-inspired personal portfolio",
